@@ -1,0 +1,42 @@
+1st Task----
+Github:
+Download git from Chrome
+https://git-scm.com/downloads/win
+SetUp Git
+
+2nd Task:
+Signup GIthub
+
+Login
+Create a Repo
+
+CLone THis repo in your system
+
+Run this command in your system CMD
+git clone REPOURL
+
+Example COmmand (Git clone https://github.com/AbdullahAnsariGit/SMIT-BATCH-18.git)
+
+
+Track Your Code 
+GIt add .
+
+GIt commit -m "Your Message"
+
+Git push -u origin main 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
