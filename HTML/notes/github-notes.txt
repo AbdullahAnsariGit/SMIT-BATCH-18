@@ -26,6 +26,14 @@ GIt commit -m "Your Message"
 Git push -u origin main 
 
 
+Host Your Project On Github
+
+Go to Setting
+Click on Pages
+Select Your Branch
+Hit on Save Option Or BTN
+
+
 
 
 
