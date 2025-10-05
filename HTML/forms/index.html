@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <!-- <p>
+        Username:
+        <input type="text" name="username" size="15" maxlength="30" />
+      </p> -->
+
+      <!--Name Input  -->
+      <h1>Username:</h1>
+      <input
+        type="text"
+        name="username"
+        size="15"
+        maxlength="30"
+        placeholder="Enter your name"
+      />
+      <!--Password Input  -->
+
+      <input
+        type="password"
+        name="password"
+        size="15"
+        maxlength="30"
+        placeholder="Enter your password"
+      />
+
+      <!--Text Area Input  -->
+
+      <p>What did you think of this gig?</p>
+      <textarea name="comments" cols="20" rows="4">
+Enter 
+your comments...</textarea
+      >
+      <!--Radio Input  -->
+
+      <p>
+        Please select your favorite genre:
+        <br />
+        <input type="radio" name="genre" value="noofthese" checked="checked" />
+        No of these <input type="radio" name="genre" value="rock" /> Rock
+        <input type="radio" name="genre" value="pop" />
+        Pop
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+      </p>
+
+      <!-- Checkbox for multiple selection input  -->
+
+      <p>
+        Please select your favorite music service(s):
+        <br />
+        <input
+          type="checkbox"
+          name="service"
+          value="itunes"
+          checked="checked"
+        />
+        iTunes <input type="checkbox" name="service" value="lastfm" /> Last.fm
+        <input type="checkbox" name="service" value="spotify" /> Spotify
+      </p>
+
+      <p>What device do you listen to music on?</p>
+      <select name="devices">
+        <option value="ipod">iPod</option>
+        <option value="radio">Radio</option>
+        <option value="computer">Computer</option>
+      </select>
+
+      <p>Select your country</p>
+      <select name="country">
+        <option value="pakistan">Pakistan</option>
+        <option value="india">India</option>
+        <option value="china">China</option>
+      </select>
+      <p>
+        Please select your favorite genre:
+        <br />
+        <input type="radio" name="genre" value="noofthese" checked="checked" />
+        No of these <input type="radio" name="genre" value="rock" /> Rock
+        <input type="radio" name="genre" value="pop" />
+        Pop
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+        <input type="radio" name="genre" value="jazz" />
+        Jazz
+      </p>
+      <!-- <p>Select your country</p>
+      <select name="country" multiple="multiple" size="3">
+        <option value="pakistan">Pakistan</option>
+        <option value="india">India</option>
+        <option value="china">China</option>
+        <option value="japan">Japan</option>
+        <option value="america">America</option>
+        <option value="dubai">Dubai</option>
+      </select> -->
+
+      <p>Upload your song in MP3 format:</p>
+      <input type="file" name="user-song" /><br />
+      <!-- <input type="submit" value="Upload" /> -->
+      <!-- <p>Subscribe to our email list:</p>
+      <input type="text" name="email" />
+      <input type="image" src="./images/image.jpg" width="20" height="20" /> -->
+
+      <!-- <button>
+        <img src="images/image.jpg" alt="add" width="10" height="10" /> Add
+      </button>
+      <input type="hidden" name="bookmark" value="lyrics" /> -->
+      <!-- 
+      <label>Age: <input type="text" name="age" /></label>
+      <br/ > Gender:
+      <input id="female" type="radio" name="gender" value="f" />
+      <label for="female">Female</label>
+      <input id="male" type="radio" name="gender" value="m" />
+      <label for="male">Male</label> -->
+
+      <!-- <label>Name:<input type="text" placeholder="Enter your name" /></label>
+      <p>Name: <input type="text" placeholder="Enter your name" /></p> -->
+      <!-- <fieldset>
+        <legend>Contact details</legend>
+        <label
+          >Email:<br />
+          <input type="text" name="email" /></label
+        ><br />
+        <label
+          >Mobile:<br />
+          <input type="text" name="mobile" /></label
+        ><br />
+        <label
+          >Telephone:<br />
+          <input type="text" name="telephone"
+        /></label>
+      </fieldset> -->
+
+      <fieldset>
+        <legend>Contact Details:</legend>
+        <label>Email:</label>
+        <input type="email" placeholder="abc@example.com" />
+        <br />
+        <label>Contact:</label>
+        <input type="text" placeholder="A-18 Gulshan, Karachi" />
+        <br />
+        <label>Telephone:</label>
+        <input type="number" placeholder="0328673636" />
+      </fieldset>
+      <!-- 
+      <input type="date" name="depart" /> -->
+
+      <input type="url" name="website" />
+    </form>
+  </body>
+</html>

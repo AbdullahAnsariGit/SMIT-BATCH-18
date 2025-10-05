@@ -1,0 +1,22 @@
+/* dot use for class */
+
+.p2 {
+  color: red;
+  font-size: 50px;
+}
+
+/* # use for id */
+#p1 {
+  color: blue;
+}
+
+.box {
+  border: 1px solid black;
+  background-color: antiquewhite;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

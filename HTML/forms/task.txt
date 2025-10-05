@@ -1,0 +1,13 @@
+Create  a form with multiple fields:
+
+1- username
+2- user first name
+3- User last name
+4-  Email
+5- Image
+6- Gender
+7- Interest - (Game, Music, Boxing, Learning) - (Multiple selection)
+8- Phone numer
+9- Select Country Name
+10- Skill Names - Multiple
+1
