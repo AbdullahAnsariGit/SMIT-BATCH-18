@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Complete CheatSheet</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a2e;
+            color: #00ff88;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #ffd93d;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+            margin: 30px 0 20px 0;
+        }
+        .code-block {
+            background: #0f3460;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-x: auto;
+            position: relative;
+        }
+        .code-block::before {
+            content: attr(data-title);
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #1a1a2e;
+            padding: 0 15px;
+            color: #ff6b6b;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .highlight {
+            color: #ffd93d;
+            font-weight: bold;
+        }
+        .function {
+            color: #ff79c6;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #888;
+            font-size: 12px;
+            padding: 20px;
+            background: #0f3460;
+            border-radius: 10px;
+            border: 1px solid #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 CSS GRID COMPLETE CHEATSHEET</h1>
+        
+        <h2>📦 CONTAINER PROPERTIES</h2>
+        <div class="code-block" data-title="Container Setup">
+            <span class="highlight">display: grid;</span> // grid container banata hai<br>
+            <span class="highlight">display: inline-grid;</span> // inline-level grid<br><br>
+            
+            <span class="highlight">gap: 20px;</span> // row + column gap <span class="highlight">(sabse zyada use)</span><br>
+            <span class="highlight">row-gap: 15px;</span> // sirf rows ke beech gap<br>
+            <span class="highlight">column-gap: 30px;</span> // sirf columns ke beech gap
+        </div>
+
+        <h2>🏗️ GRID TEMPLATE</h2>
+        <div class="code-block" data-title="Columns & Rows">
+            <span class="highlight">grid-template-columns: 1fr 2fr 1fr;</span> // columns ki width set karta<br>
+            <span class="highlight">grid-template-rows: 100px 1fr auto;</span> // rows ki height set karta<br>
+            <span class="highlight">grid-template-areas: "header header" "sidebar main";</span> // dashboard layout
+        </div>
+
+        <h2>⚡ FUNCTIONS (Responsive Magic)</h2>
+        <div class="code-block" data-title="repeat() Functions">
+            <span class="function">repeat(4, 1fr);</span> // 4 barabar columns<br>
+            <span class="function">repeat(auto-fit, minmax(250px, 1fr));</span> // responsive cards <span class="highlight">(sabse best)</span><br>
+            <span class="function">repeat(auto-fill, minmax(200px, 1fr));</span> // fixed tracks
+        </div>
+
+        <h2>📍 POSITIONING</h2>
+        <div class="code-block" data-title="Item Placement">
+            <span class="highlight">grid-column: 1 / 3;</span> // column 1 se 3 tak<br>
+            <span class="highlight">grid-column: span 2;</span> // 2 columns span <span class="highlight">(featured card)</span><br>
+            <span class="highlight">grid-column: 1 / -1;</span> // full width <span class="highlight">(hero banner)</span><br><br>
+            
+            <span class="highlight">grid-row: 2 / 4;</span> // row 2 se 4 tak<br>
+            <span class="highlight">grid-row: span 3;</span> // 3 rows span<br><br>
+            
+            <span class="highlight">grid-area: header;</span> // grid-template-areas ke saath<br>
+            <span class="highlight">grid-column-start: 2;</span> // exact start line<br>
+            <span class="highlight">grid-column-end: 5;</span> // exact end line
+        </div>
+
+        <h2>🎯 ALIGNMENT</h2>
+        <div class="code-block" data-title="Items Alignment">
+            <span class="highlight">justify-items: center;</span> // saare items horizontally center<br>
+            <span class="highlight">align-items: center;</span> // saare items vertically center<br>
+            <span class="highlight">place-items: center;</span> // justify + align <span class="highlight">(short form)</span><br><br>
+            
+            <span class="highlight">justify-self: end;</span> // ek item horizontally align<br>
+            <span class="highlight">align-self: start;</span> // ek item vertically align
+        </div>
+
+        <h2>🌐 CONTAINER ALIGNMENT</h2>
+        <div class="code-block" data-title="Container Alignment">
+            <span class="highlight">justify-content: center;</span> // pura grid horizontally center<br>
+            <span class="highlight">align-content: center;</span> // pura grid vertically center<br>
+            <span class="highlight">place-content: center;</span> // justify + align content <span class="highlight">(short)</span>
+        </div>
+
+        <div class="footer">
+            <p>📌 <strong>COPY KAR LO BHAI - Lifetime Reference!</strong></p>
+            <p>🚀 <strong>TOP 5 MUST KNOW:</strong></p>
+            <p><span class="function">1. repeat(auto-fit, minmax(280px, 1fr))</span> → Responsive Cards</p>
+            <p><span class="highlight">2. gap: 1.5rem</span> → Perfect Spacing</p>
+            <p><span class="highlight">3. grid-column: 1 / -1</span> → Full Width Hero</p>
+            <p><span class="highlight">4. place-items: center</span> → Perfect Center</p>
+            <p><span class="highlight">5. grid-template-areas</span> → Dashboard Layout</p>
+        </div>
+    </div>
+</body>
+</html>
