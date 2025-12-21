@@ -3,8 +3,10 @@
   padding: 0px;
   box-sizing: border-box;
 }
-.header {
+body {
+  background-color: #f2f0f1;
 }
+
 .header .top-bar {
   background-color: black;
   display: flex;
@@ -18,12 +20,18 @@
 .header .bottom-bar {
   display: flex;
   justify-content: space-between;
-}
-.mid-container {
-  display: flex;
-  gap: 10px;
   align-items: center;
   padding: 10px 10px;
+}
+.header .bottom-bar .left-container {
+  display: flex;
+}
+
+.mid-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  /* padding: 10px 10px; */
 }
 .mid-container ul {
   display: flex;
@@ -32,13 +40,15 @@
 .mid-container ul li {
   display: inline-block;
 }
-
+.mid-container ul li a {
+  font-size: 18px;
+}
 .mid-container .search-bar {
   display: flex;
   gap: 10px;
   background-color: #f0f0f0;
   border-radius: 10px;
-  padding: 10px 10px;
+  padding: 14px 10px;
 }
 
 .search-bar img {
@@ -47,11 +57,177 @@
   object-fit: contain;
 }
 .mid-container .search-bar input {
-  background-color: transparent;
   border: none;
   outline: 0px;
-  width: 300px;
+  background-color: transparent;
+  width: 600px;
+}
+.banner-container {
+  display: flex;
+  background-color: #f2f0f1;
+  gap: 40px;
+  height: 100vh;
+}
+
+.banner-left {
+  width: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.banner-left h1 {
+  font-size: 64px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.banner-left p {
+  font-size: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+.banner-left button {
+  background-color: black;
+  color: white;
+  margin: 0px;
+  font-size: 28px;
+  border-radius: 40px;
+  padding: 16px 46px;
+  border: 0px;
+}
+.banner-right {
+  width: 50%;
+}
+.banner-right img {
+  width: 80%;
+  height: 800px;
+  object-fit: cover;
+  object-position: top;
 }
 
 .container {
+  max-width: 1170px;
+}
+
+/* 💻 Large Screens (1024px – 1250px) */
+@media only screen and (min-width: 1024px) and (max-width: 1250px) {
+  /* .container {
+    max-width: 970px;
+  }
+  .banner-right img {
+    width: 100%;
+  }
+  .search-bar input {
+    width: 300px !important;
+
+  } */
+  .container {
+    max-width: 924px;
+  }
+  .search-bar input {
+    width: 381px !important;
+  }
+}
+
+/* 📱 Tablet & Small Laptops (Up to 1023px) */
+@media only screen and (max-width: 1023px) {
+  /* .container {
+    max-width: 900px;
+  }
+  .banner-container h1 {
+    font-size: 50px;
+  }
+  .banner-left p {
+    font-size: 24px;
+  }
+  .banner-right img {
+    height: 650px;
+  }
+  .search-bar input {
+    width: 220px !important;
+  } */
+
+  .mid-container {
+    display: none;
+  }
+  .left-container {
+    margin: 0px;
+  }
+  .right-container {
+    margin: 0px;
+  }
+}
+
+/* 📱 Tablet Portrait (Up to 767px) */
+@media only screen and (max-width: 767px) {
+  /* .banner-container {
+    align-items: center;
+    height: 70vh;
+  }
+  .banner-right img {
+    height: 392px;
+  }
+  .container {
+    max-width: 620px;
+  }
+  .bottom-bar {
+    padding: 10px 40px !important;
+  }
+  .mid-container {
+    display: none;
+  }
+  .left-container,
+  .right-container {
+    margin: 0px;
+  }
+  .banner-container h1 {
+    font-size: 33px;
+  }
+  .banner-left p {
+    font-size: 18px;
+  }
+  .banner-left button {
+    font-size: 22px;
+    padding: 12px 29px;
+  } */
+}
+
+/* 📱 Mobile Large (Up to 730px) */
+@media only screen and (max-width: 730px) {
+  /* .container {
+    max-width: 500px;
+  } */
+}
+
+@media only screen and (max-width: 519px) {
+  /* .container {
+    padding: 10px;
+  }
+  .banner-container {
+    display: flex;
+    flex-direction: column-reverse !important;
+    height: 80vh;
+  }
+  .banner-left {
+    width: 100%;
+    text-align: center;
+  }
+  .banner-left button {
+    margin: 0 auto;
+  }
+  .banner-right {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  } */
+}
+
+/* 📱 Mobile Small (Up to 410px) */
+@media only screen and (max-width: 410px) {
+}
+
+/* 📱 Extra Small Mobile (Up to 370px) */
+@media only screen and (max-width: 370px) {
 }

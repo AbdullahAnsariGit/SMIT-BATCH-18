@@ -1,0 +1,28 @@
+.container {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  gap: 29px;
+  grid-template-areas:
+    "header banner banner"
+    "header sidebar sidebar"
+    "header footer footer";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.header {
+  grid-area: header;
+  background-color: purple;
+}
+.sidebar {
+  grid-area: sidebar;
+  background-color: crimson;
+}
+.banner {
+  grid-area: banner;
+  background-color: aqua;
+}
+.footer {
+  grid-area: footer;
+  background-color: yellow;
+}

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bootstrap Concepts — Step-by-step Guide (HTML + CSS)</title>
+  <style>
+    /* ----------- Base / layout ---------- */
+    :root{
+      --gap: 1rem;
+      --max-width-sm: 540px;
+      --max-width-md: 720px;
+      --max-width-lg: 960px;
+      --max-width-xl: 1140px;
+
+      /* color palette (like a simple Bootstrap palette) */
+      --primary: #0d6efd;
+      --secondary: #6c757d;
+      --success: #198754;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #0dcaf0;
+      --light: #f8f9fa;
+      --dark: #212529;
+
+      --text: #212529;
+      --muted: #6c757d;
+    }
+
+    body{font-family: system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.5;color:var(--text);padding:2rem;background:#fff}
+    .page{max-width:1100px;margin:0 auto}
+    h1,h2{margin:0 0 .5rem}
+    h1{font-size:1.6rem}
+    p.lead{color:var(--muted)}
+    section{border:1px solid #eee;padding:1rem;margin:.75rem 0;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(250,250,250,0.9))}
+    .row{display:flex;flex-wrap:wrap;gap:var(--gap)}
+    .col{flex:1 1 0;min-width:240px}
+    pre{background:#0f1724;color:#e6edf3;padding:1rem;border-radius:6px;overflow:auto}
+    code{background:#f1f5f9;padding:.1rem .3rem;border-radius:4px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace}
+
+    /* ---------- Breakpoints (media queries) ---------- */
+    /* default mobile-first styles above */
+    .bp-demo{padding:.75rem;border-radius:6px;text-align:center;border:1px dashed #ddd}
+    .bp-demo.small{background:linear-gradient(90deg,var(--light),#fff)}
+    
+    /* mimicking Bootstrap breakpoints */
+    @media (min-width: 576px){ /* sm */
+      .bp-demo{font-weight:600}
+      .bp-badge::after{content:" sm (≥576px)"}
+    }
+    @media (min-width: 768px){ /* md */
+      .bp-demo{font-size:1.05rem}
+      .bp-badge::after{content:" md (≥768px)"}
+    }
+    @media (min-width: 992px){ /* lg */
+      .bp-demo{font-size:1.1rem}
+      .bp-badge::after{content:" lg (≥992px)"}
+    }
+    @media (min-width: 1200px){ /* xl */
+      .bp-demo{font-size:1.2rem}
+      .bp-badge::after{content:" xl (≥1200px)"}
+    }
+
+    /* --------- Containers (responsive widths) --------- */
+    .container{width:100%;padding-left:1rem;padding-right:1rem;margin:0 auto}
+    .container-sm{max-width:var(--max-width-sm)}
+    .container-md{max-width:var(--max-width-md)}
+    .container-lg{max-width:var(--max-width-lg)}
+    .container-xl{max-width:var(--max-width-xl)}
+
+    /* --------- Spacing utility helpers (margin & padding) ---------- */
+    /* simplified utility classes, mobile-first */
+    .m-0{margin:0}
+    .mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:1rem}
+    .mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:1rem}
+    .p-1{padding:.25rem}.p-2{padding:.5rem}.p-3{padding:1rem}
+    .px-2{padding-left:.5rem;padding-right:.5rem}
+    .py-2{padding-top:.5rem;padding-bottom:.5rem}
+
+    /* --------- Flexbox helpers ---------- */
+    .d-flex{display:flex}
+    .flex-row{flex-direction:row}
+    .flex-column{flex-direction:column}
+    .justify-between{justify-content:space-between}
+    .justify-center{justify-content:center}
+    .align-center{align-items:center}
+    .gap-2{gap:.5rem}
+
+    /* --------- Prebuilt components (basic examples) ---------- */
+    .btn{display:inline-block;padding:.45rem .75rem;border-radius:.375rem;border:1px solid transparent;text-decoration:none;font-weight:600}
+    .btn-primary{background:var(--primary);color:white}
+    .btn-outline{background:transparent;border-color:var(--primary);color:var(--primary)}
+
+    .card{border:1px solid #e6e6e6;border-radius:.5rem;padding:1rem;background:white}
+    .card img{max-width:100%;border-radius:.4rem}
+    .navbar{display:flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border-radius:.5rem}
+    .navbar .brand{font-weight:700}
+    .badge{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-size:.85rem}
+
+    /* small utilities for demo visuals */
+    .demo-row{display:flex;gap:1rem;flex-wrap:wrap}
+    .box{padding:1rem;border-radius:6px;border:1px solid #eee;background:var(--light)}
+
+    /* responsive card grid using our simple utilities */
+    .grid{display:grid;grid-template-columns:repeat(1,1fr);gap:1rem}
+    @media(min-width:576px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:992px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+    footer{font-size:.9rem;color:var(--muted);text-align:center;margin-top:1.5rem}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Bootstrap concepts — step-by-step guide</h1>
+    <p class="lead">A beginner-friendly guide demonstrating key concepts (breakpoints, colors, containers, spacing, flexbox, components) using plain HTML & CSS. Each section includes a short explanation and a live example.</p>
+
+    <!-- Breakpoints -->
+    <section id="breakpoints">
+      <h2>1. Breakpoints (responsive rules)</h2>
+      <p>Breakpoints let you change styles when the viewport reaches a certain width. This is mobile-first: write base styles for small screens, then add <code>@media (min-width: ...)</code> for larger screens.</p>
+      <div class="row">
+        <div class="col">
+          <div class="bp-demo small">Resize the window to see text & badge change.<span class="bp-badge" style="display:inline-block;margin-left:.5rem;padding:.2rem .4rem;background:#eef; border-radius:6px;font-size:.85rem;color:var(--primary)"></span></div>
+        </div>
+        <div class="col">
+          <pre><code>&commat;media (min-width: 768px) {
+  .sidebar { display:block; }
+}
+</code></pre>
+        </div>
+      </div>
+      <ol>
+        <li>Define base (mobile) styles first.</li>
+        <li>Add media queries for <code>sm, md, lg, xl</code> as needed.</li>
+        <li>Use layout changes, font sizes, visibility toggles at breakpoints.</li>
+      </ol>
+    </section>
+
+    <!-- Colors -->
+    <section id="colors">
+      <h2>2. Colors</h2>
+      <p>Keep a central palette using CSS variables. This makes theming and consistency easy.</p>
+      <div class="demo-row">
+        <div class="box"><div class="badge" style="background:var(--primary);color:white">Primary</div></div>
+        <div class="box"><div class="badge" style="background:var(--success);color:white">Success</div></div>
+        <div class="box"><div class="badge" style="background:var(--danger);color:white">Danger</div></div>
+        <div class="box"><div class="badge" style="background:var(--warning);color:black">Warning</div></div>
+      </div>
+      <pre><code>:root{ --primary: #0d6efd; --success: #198754; --danger: #dc3545; }</code></pre>
+      <p>Change <code>:root</code> values to update the whole site theme.</p>
+    </section>
+
+    <!-- Containers -->
+    <section id="containers">
+      <h2>3. Containers</h2>
+      <p>Containers set a readable max width and horizontal padding. They let your content breathe on large screens while staying full-width on small screens.</p>
+      <div class="container container-md card">
+        <strong>Example: </strong> this block is a <code>.container-md</code> — it will center and stop expanding past a defined max width.
+      </div>
+      <pre><code>.container{ width:100%; padding-left:1rem; padding-right:1rem; }
+.container-md{ max-width:720px; margin:0 auto; }
+</code></pre>
+    </section>
+
+    <!-- Margin -->
+    <section id="margin">
+      <h2>4. Margin (spacing outside an element)</h2>
+      <p>Margins create space between elements. Utility classes let you add margin quickly without writing new CSS every time.</p>
+      <div class="card">
+        <div class="box mb-3">I have <code>.mb-3</code> (margin-bottom)</div>
+        <div class="box">I follow the spaced box</div>
+      </div>
+      <pre><code>.mb-3{ margin-bottom: 1rem; }</code></pre>
+      <p>Tip: use vertical margin utilities (mt, mb) for consistent rhythm.</p>
+    </section>
+
+    <!-- Padding -->
+    <section id="padding">
+      <h2>5. Padding (space inside an element)</h2>
+      <p>Padding increases the inner space of a box. Use utilities like <code>.p-2</code>, <code>.px-2</code>, <code>.py-2</code> for quick adjustments.</p>
+      <div class="card p-3">
+        <strong>Card with .p-3</strong>
+        <p class="m-0">Content inside has internal spacing.</p>
+      </div>
+      <pre><code>.p-3{ padding:1rem; }</code></pre>
+    </section>
+
+    <!-- Flexbox -->
+    <section id="flexbox">
+      <h2>6. Flexbox</h2>
+      <p>Flexbox provides powerful alignment and distribution tools for 1-dimensional layouts (rows or columns).</p>
+      <div class="card">
+        <div class="d-flex align-center justify-between p-2" style="background:#fafafa;border-radius:6px">
+          <div>Left</div>
+          <div>Center</div>
+          <div>Right</div>
+        </div>
+        <p class="mt-2">Utilities used: <code>.d-flex</code>, <code>.align-center</code>, <code>.justify-between</code>.</p>
+      </div>
+      <pre><code>.d-flex{ display:flex; }
+.justify-between{ justify-content: space-between; }
+.align-center{ align-items:center; }
+</code></pre>
+      <p>Common patterns: horizontal navs, spacing between items, vertical centering.</p>
+    </section>
+
+    <!-- Prebuilt components -->
+    <section id="components">
+      <h2>7. Prebuilt components (buttons, nav, card)</h2>
+      <p>Prebuilt components are reusable patterns. Keep them simple and make styles composable.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Buttons</h3>
+          <a class="btn btn-primary" href="#">Primary</a>
+          <a class="btn btn-outline" href="#">Outline</a>
+          <pre><code>.btn{ padding:.45rem .75rem; border-radius:.375rem }
+.btn-primary{ background:var(--primary); color:white }</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Navbar</h3>
+          <div class="navbar" style="background:linear-gradient(90deg,#fff,#f7fbff);">
+            <div class="brand">MyBrand</div>
+            <div style="margin-left:auto;display:flex;gap:.5rem"><a class="btn btn-outline" href="#">Login</a><a class="btn btn-primary" href="#">Sign up</a></div>
+          </div>
+          <pre><code>&lt;nav class="navbar"&gt; ... &lt;/nav&gt;</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Card</h3>
+          <div class="card">
+            <img src="https://picsum.photos/seed/picsum/400/200" alt="placeholder">
+            <h4>Card title</h4>
+            <p class="m-0">Short description, links, and actions go here.</p>
+            <div class="mt-2"><a class="btn btn-primary" href="#">Action</a></div>
+          </div>
+          <pre><code>.card{ border-radius:.5rem;padding:1rem; }</code></pre>
+        </div>
+      </div>
+
+      <p class="mt-2">Components should be accessible — use semantic HTML, focus styles, and keyboard support for interactivity.</p>
+    </section>
+
+    <footer>Want this file as a downloadable HTML? Let me know and I'll prepare it for you.</footer>1
+  </div>
+</body>
+</html>
