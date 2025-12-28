@@ -98,17 +98,63 @@ myname = "Alex";
 
 // Learning JavaScript JavaScript helps beginners beginners practice practice coding coding skills skills daily daily with with simple simple examples examples
 
-var language = "Javascript";
-var level = "beginners";
-var doing = "practice";
-var profession = "coding";
-var word = "skills";
-var word2 = "daily";
-var word3 = "with";
-var word4 = "simple";
-var word5 = "examples";
+// var language = "Javascript";
+// var level = "beginners";
+// var doing = "practice";
+// var profession = "coding";
+// var word = "skills";
+// var word2 = "daily";
+// var word3 = "with";
+// var word4 = "simple";
+// var word5 = "examples";
 
-var sentence = "Learning " + " " + language + " " + " help" + " " + level + " " + doing + " " + profession + " " + word + " " + word2 + " " + word3 + " " + word4 + " " + word5;
+// var sentence = "Learning " + " " + language + " " + " help" + " " + level + " " + doing + " " + profession + " " + word + " " + word2 + " " + word3 + " " + word4 + " " + word5;
 
 
-console.log(sentence);
+// console.log(sentence);
+
+
+
+// Question 1
+
+// What will be printed in the console?
+
+//  
+
+
+
+
+// Question 2
+
+// What will be the output of the following code?
+
+// var num1 = 10;
+// var num2 = "5";
+// var result = num1 + num2;
+// console.log(result);
+
+
+// Question 3
+
+// What will this code display?
+
+// var language = "JavaScript";
+// var action = "practice";
+// console.log("We " + action + " " + language);
+
+// What happens when this code runs?
+// var a = "5";
+// var b = 5;
+// var c = a + b + 5;
+// console.log(c);
+// 510
+// 15
+
+// var x;
+// x = x + 10;
+// console.log(x);
+
+var a = "10";
+var b = 2;
+var c = a / b + a;
+console.log(c);
