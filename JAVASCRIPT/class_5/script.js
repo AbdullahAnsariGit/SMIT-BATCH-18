@@ -144,11 +144,7 @@
 // lenght  | definition: getting a lenght of an array
 
 // console.log(ground)
-
-
-
-
-// ground = "bodunary" + picth
+// // ground = "bodunary" + picth
 
 
 
