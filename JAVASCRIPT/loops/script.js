@@ -94,8 +94,8 @@
 // "civic" == 'civic' == palindrome
 
 // for (let i = 0; i < 5; i--) {
-    
-    
+
+
 // }
 
 
@@ -114,5 +114,166 @@
 // 5 X 3 = 15
 // 5 X 2 = 10
 // 5 X 1 = 5
+
+
+// var firstNames = ["BlueRay ", "Upchuck ", "Lojack ", "Gizmo ", "Do-Rag "];
+// var lastNames = ["Zzz", "Burp", "Dogbone", "Droop"];
+// var fullNames = [];
+
+
+
+// for (var i = 0; i < firstNames.length; i++) {
+//     for (var j = 0; j < lastNames.length; j++) {
+//         fullNames.push(firstNames[i] + lastNames[j]);
+//     }
+// }
+
+
+
+
+
+
+
+
+// 4 dafa chalega
+
+
+
+// First
+// azzan qureshi
+// azzan ansari
+// azzan khan
+// azzan jamel
+// azzan sahab
+// azzan nazim
+
+// second
+// abdullah qureshi
+// abdullah ansari
+// abdullah khan
+// abdullah jamel
+// abdullah sahab
+// abdullah nazim
+// 
+
+
+// let firstnames = ["azan", "abdullah", "ali", "daniyal", "chipa", "ubaid"]
+// let lastnames = ["qureshi", "ansari", "khan", "jamel", "sahab", "nazim"]
+
+
+// let fullnames = []
+// fullnames.push(firstnames[i] + " " + lastnames[j]);
+
+
+
+
+
+
+
+
+
+
+
+/// 2
+// 3
+// 4 // true ek dafa *
+// 0 < 2    ==> **  true
+// 1 < 2    ==> **  true
+
+// 0 < 3    ==> *   true
+// 1 < 3    ==> **  true
+// 2 < 3    ==> *** true
+// 3 < 3    ==> *** false
+
+// 0 < 4    ==> *   true
+// 1 < 4    ==> **  true
+// 2 < 4    ==> *** true
+// 3 < 4    ==> **** true
+// 4 < 4    ==> ***** false
+
+// for (let i = 0; i <= 9; i++) {
+//     let star = ""
+
+//     for (let j = 0; j < i; j++) {
+//         star += "*"
+//     }
+//     console.log(star);
+// }
+
+
+
+
+let pakistanCricketTeam = [
+    "Babar Azam",
+    "Mohammad Rizwan",
+    "Shaheen Shah Afridi",
+    "Fakhar Zaman",
+    "Imam-ul-Haq",
+    "Shadab Khan",
+    "Haris Rauf",
+    "Naseem Shah",
+    "Hasan Ali",
+    "Iftikhar Ahmed",
+    "Abdullah Shafique",
+    "Mohammad Nawaz",
+    "Sarfaraz Ahmed",
+    "Saud Shakeel",
+    "Usman Khan",
+];
+let indianCricketTeam = [
+    "Rohit Sharma",
+    "Virat Kohli",
+    "Shubman Gill",
+    "KL Rahul",
+    "Shreyas Iyer",
+    "Suryakumar Yadav",
+    "Hardik Pandya",
+    "Ravindra Jadeja",
+    "Ravichandran Ashwin",
+    "Jasprit Bumrah",
+    "Mohammed Shami",
+    "Mohammed Siraj",
+    "Kuldeep Yadav",
+    "Rishabh Pant",
+    "Ishan Kishan"
+];
+
+let australiaCricketTeam = [
+    "Pat Cummins",
+    "Mitchell Starc",
+    "Josh Hazlewood",
+    "Nathan Lyon",
+    "Steve Smith",
+    "David Warner",
+    "Marnus Labuschagne",
+    "Travis Head",
+    "Glenn Maxwell",
+    "Marcus Stoinis",
+    "Cameron Green",
+    "Alex Carey",
+    "Josh Inglis",
+    "Adam Zampa", 
+    "Mitchell Marsh"
+];
+
+let cricketerName = prompt("enter any cricketer name").toLowerCase()
+let cricketFound = false
+let cricketerName2 = ""
+let countryName = ""
+
+for (let i = 0; i < pakistanCricketTeam.length; i++) {
+    if (cricketerName === pakistanCricketTeam[i].toLowerCase()) {
+        cricketFound = true
+        cricketerName2 = pakistanCricketTeam[i]
+        countryName = "Pakistan"
+    }
+}
+if (cricketFound) {
+    console.log("Cricketer " + countryName + " se he " + cricketerName2)
+} else {
+    console.log("Not found")
+}
+
+
 
 
