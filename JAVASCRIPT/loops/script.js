@@ -313,13 +313,13 @@
 //        text length is 112
 // check everytime like the upper one
 
-let text2 =
-  "world war II was going to happen by america. and russia was also going to do world war II because of the tarrifs";
+// let text2 =
+//   "world war II was going to happen by america. and russia was also going to do world war II because of the tarrifs";
 
-for (var i = 0; i < text2.length; i++) {
-  if (text2.slice(i, i + 12) === "because") {
-  }
-}
+// for (var i = 0; i < text2.length; i++) {
+//   if (text2.slice(i, i + 12) === "because") {
+//   }
+// }
 
 // }
 
@@ -340,7 +340,68 @@ for (var i = 0; i < text2.length; i++) {
 // camelcase   | kashanAdnan
 // pascalcase  | KashanAdnan
 
-// let text =
-//   "World War II was going to happen by america. and russia was also going to do World War II becuase of the tarrifs";
+// let isFound = text.indexOf("because");
+// console.log(isFound);
 
-// console.log(text.indexOf("going"));
+// let text =
+//   "This is World War II was going to happen by america. and russia was also going to do World War II becuase of the tarrifs"; // 112 characters
+
+// let search;
+// let findWord = prompt("search word here");
+// let replaceWord = prompt("replace word here");
+
+// let result;
+// let result2;
+// for (let i = 0; i < text.length; i++) {
+//   search = text.slice(i, i + findWord.length);
+//   if (findWord.toLowerCase() === search.toLowerCase()) {
+//     result =
+//       text.slice(0, i) +
+//       replaceWord +
+//       text.slice(i + findWord.length, text.length);
+//     for (let i = 0; i < result.length; i++) {
+//       search = result.slice(i, i + findWord.length);
+//       if (findWord.toLowerCase() === search.toLowerCase()) {
+//         result2 =
+//           result.slice(0, i) +
+//           replaceWord +
+//           result.slice(i + findWord.length, result.length);
+//       }
+//     }
+//   }
+// }
+
+// console.log(result);
+// console.log(result2);
+
+// let findWord = prompt("search word here");
+// let replaceWord = prompt("replace word here");
+
+// let text =
+//   "This is World War II was going to happen by america. and russia was also going to do World War II becuase of the tarrifs";
+
+// var output = text.replace(findWord, replaceWord);
+
+// console.log(output);
+
+// let number = Math.round(89.49);
+// let number = Math.ceil(89.19);
+// let number = Math.floor(89.99);
+// let randomNumber = Math.round(Math.random()* 1000000);
+
+// console.log(randomNumber);
+
+// let number = 48.239746239;
+// console.log(number.toFixed(4));
+
+var rightNow = new Date();
+let hours = rightNow.getHours();
+let year = rightNow.getFullYear();
+let date = rightNow.getDate();
+let day = rightNow.getDay();
+ 
+console.log(rightNow);
+console.log(hours);
+console.log(year);
+console.log(date);
+console.log(day);
