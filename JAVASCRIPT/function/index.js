@@ -56,44 +56,100 @@
 
 // Data Taking from customer
 
-let productPrice = +prompt("Enter your product price");
-let country = prompt("Enter your country");
-let city = prompt("Enter your city");
-let referCode = prompt("Enter your referCode");
+// let productPrice = +prompt("Enter your product price");
+// let country = prompt("Enter your country");
+// let city = prompt("Enter your city");
+// let referCode = prompt("Enter your referCode");
 
-function checkout(productPrice, referCode) {
-  // Variables
-  let shippingCharges = 0;
-  let RDA = 0;
-  let tax = 0;
-  let total;
+// function checkout(productPrice, referCode) {
+//   // Variables
+//   let shippingCharges = 0;
+//   let RDA = 0;
+//   let tax = 0;
+//   let total;
 
-  // Referal Discount Code (RDA)
-  if (referCode && referCode === "KA90") {
-    RDA = productPrice - (productPrice / 100) * 90; // 90% OFF
-  } else if (referCode && referCode === "AB20") {
-    RDA = productPrice - (productPrice / 100) * 20; // 20% OFF
-  } else {
-    RDA = productPrice; // 0% OFF
-  }
-  // RDA = 10
-  
-  // Shipping Calculation
-  if (country == "pakistan" && city === "karachi") {
-    shippingCharges = 200;
-  } else if (country == "china" && city === "shanghai") {
-    shippingCharges = 900;
-  } else {
-    alert("Country or City is not included in the shipping!");
-    return;
-  }
+//   // Referal Discount Code (RDA)
+//   if (referCode && referCode === "KA90") {
+//     RDA = productPrice - (productPrice / 100) * 90; // 90% OFF
+//   } else if (referCode && referCode === "AB20") {
+//     RDA = productPrice - (productPrice / 100) * 20; // 20% OFF
+//   } else {
+//     RDA = productPrice; // 0% OFF
+//   }
+//   // RDA = 10
 
-  // Tax Calculation
-  tax = (RDA / 100) * 13;
-  total = shippingCharges + RDA + tax;
-  return total;
+//   // Shipping Calculation
+//   if (country == "pakistan" && city === "karachi") {
+//     shippingCharges = 200;
+//   } else if (country == "china" && city === "shanghai") {
+//     shippingCharges = 900;
+//   } else {
+//     alert("Country or City is not included in the shipping!");
+//     return;
+//   }
+
+//   // Tax Calculation
+//   tax = (RDA / 100) * 13;
+//   total = shippingCharges + RDA + tax;
+//   return total;
+// }
+
+// let total = checkout(productPrice, referCode);
+
+// console.log(total);
+
+// let pinNum =+ prompt("Enter Your Pin Number");
+// let otherBankCard = prompt("Do you have other bank card Yes / No").toLocaleLowerCase();
+// let recip = prompt("Do you want recip ? (yes or no)");
+
+// function atmMachine(pinNum , otherBankCard , recip) {
+//   let atmAmount = 150000;
+//   let pin = 1234;
+//   let amount =+ prompt("How much do you want to withdraw ?");
+
+//   if (pinNum && pinNum === pin) {
+//     if (amount <= atmAmount) {
+//       amount =  atmAmount - amount
+//     }
+//   } else {
+//     return "Invalid Pin"
+//   }
+
+//   if (otherBankCard == "yes") {
+//     amount = amount - 10;
+//   }
+
+//   if (recip == "yes") {
+//     amount = amount - 3.13;
+//   }
+
+//   return amount;
+// }
+
+// let bankMachine = atmMachine(pinNum,otherBankCard,recip);
+
+// alert(bankMachine);
+
+// function newFunc() {
+//   let variable = "Data";
+// }
+
+// console.log(variable);
+
+// newFunc();
+
+let dayName = prompt("Enter any day name").toLowerCase();
+
+switch (dayName) {
+  case "sat":
+    alert("Whoopee");
+    break;
+  case "sun":
+    alert("Whoopee");
+    break;
+  case "fri":
+    alert("TGIF!");
+    break;
+  default:
+    alert("Shoot me now!");
 }
-
-let total = checkout(productPrice, referCode);
-
-console.log(total);
