@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.scenre {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  perspective: 800px; /* Sets the 3D viewing distance */
+  transform-style: preserve-3d;
+  overflow: hidden;
+  background-color: rgba(114, 149, 189, 0.9);
+  transition: 3s;
+}
+#sky {
+  position: absolute;
+  width: 100%;
+  height: 500px;
+  opacity: 0.8;
+  top: 0;
+  transition: 3s;
+}
+
+#sun {
+  position: absolute;
+  opacity: 0.8;
+  left: 100px;
+  top: 20px;
+  width: 370px;
+  transition: 3s;
+}
+#moon {
+  opacity: 0;
+  position: absolute;
+  right: 200px;
+  top: 200px;
+  width: 100px;
+  transition: 3s;
+}
+
+#birds {
+  position: absolute;
+  z-index: 1;
+  width: 500px;
+  opacity: 0.8;
+  transition: 3s;
+  right: 300px;
+}
+
+#zombie {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  transition: 9s;
+  width: 500px;
+  opacity: 0;
+  filter: brightness(80%);
+}
+#grass {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  transition: 3s;
+  height: 400px;
+  transform: rotateX(-15deg) translateZ(150px);
+}
+#cabin {
+  width: 800px;
+  position: absolute;
+  bottom: -150px;
+  right: 300px;
+  z-index: 100000;
+  transition: 3s;
+}
+#dog {
+  position: absolute;
+  bottom: 140px;
+  filter: drop-shadow(4px 20px 8px rgba(0, 0, 0, 0.4)) brightness(80%);
+  right: 1300px;
+  width: 300px;
+  transition: 6.5s;
+}

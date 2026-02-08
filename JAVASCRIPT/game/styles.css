@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .container {
@@ -9,6 +10,7 @@
   height: 100vh;
   width: 100vw;
   background-color: black;
+  overflow: hidden;
 }
 #element {
   width: 50px;
@@ -16,5 +18,18 @@
   background-color: #ffffff;
   position: absolute;
   bottom: 0;
-  transition: 0.1s;
+  transition: 1s ease-out;
+}
+
+.enemy-style{
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 0px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: 0.7s;
 }
