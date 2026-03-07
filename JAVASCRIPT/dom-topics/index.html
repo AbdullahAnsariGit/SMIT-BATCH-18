@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Product Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .dashboard {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input {
+      padding: 8px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: 180px;
+    }
+
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .add-btn {
+      background: #007bff;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      width: 220px;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .price {
+      color: green;
+      font-weight: bold;
+      display: block;
+      margin: 5px 0;
+    }
+
+    .edit-btn {
+      background: orange;
+      color: white;
+      margin-right: 5px;
+    }
+
+    .delete-btn {
+      background: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>Add Product</h2>
+    <input type="text" id="name" placeholder="Product Name">
+    <input type="text" id="desc" placeholder="Description">
+    <input type="number" id="price" placeholder="Price">
+    <input type="text" id="img" placeholder="Image URL">
+    <button class="add-btn" id="addProduct">Add Product</button>
+  </div>
+
+  <div class="container" id="productContainer"></div>
+
+  <script src="index.js"></script>
+
+</body>
+</html>

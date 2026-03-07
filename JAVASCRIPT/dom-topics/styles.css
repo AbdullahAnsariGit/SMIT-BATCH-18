@@ -1,0 +1,11 @@
+.btn {
+  background-color: red;
+  color: white;
+  font-size: 22px;
+}
+
+.btn2 {
+  font-weight: 800;
+  font-style: italic;
+  text-decoration: dotted;
+}
