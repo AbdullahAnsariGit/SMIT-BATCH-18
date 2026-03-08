@@ -62,7 +62,6 @@
 //   },
 // };
 
-
 // Deep copy // Deep cloning -> Works on nested objects layers
 // let userDetails2 = JSON.parse(JSON.stringify(userDetails));
 // Shallow Copy // Shallow cloning -> Only work on first layer
@@ -81,3 +80,100 @@
 
 // console.log(a)
 // console.log(b)
+
+// Copy the first student from our array, add a hobby array, then log without mutating original.
+
+// const students = [
+//   {
+//     name: "Emma",
+//     age: 21,
+//     grade: 88,
+//     city: "Toronto",
+//     hobbies: ["reading", "coding"],
+//   },
+//   {
+//     name: "Liam",
+//     age: 19,
+//     grade: 76,
+//     city: "Vancouver",
+//     hobbies: ["gaming", "sports"],
+//   },
+//   {
+//     name: "Olivia",
+//     age: 22,
+//     grade: 92,
+//     city: "Toronto",
+//     hobbies: ["music", "travel"],
+//   },
+//   {
+//     name: "Noah",
+//     age: 20,
+//     grade: 65,
+//     city: "Montreal",
+//     hobbies: ["art", "coding"],
+//   },
+//   {
+//     name: "Ava",
+//     age: 21,
+//     grade: 95,
+//     city: "Vancouver",
+//     hobbies: ["reading", "sports"],
+//   },
+// ];
+
+// // let copyFirstStudentFromArray = {...students[0]}; //Shallow copy
+// let copyFirstStudentFromArray = JSON.parse(JSON.stringify(students[0])); //Deep copy
+// copyFirstStudentFromArray.hobbies.push("war");
+// copyFirstStudentFromArray.name = "abdullah"
+
+// console.log(students);
+// console.log(copyFirstStudentFromArray);
+
+const students = [
+  {
+    name: "Emma",
+    age: 21,
+    grade: 88,
+    city: "Toronto",
+    hobbies: ["reading", "coding"],
+  },
+  {
+    name: "Liam",
+    age: 19,
+    grade: 76,
+    city: "Vancouver",
+    hobbies: ["gaming", "sports"],
+  },
+  {
+    name: "Olivia",
+    age: 22,
+    grade: 92,
+    city: "Toronto",
+    hobbies: ["music", "travel"],
+  },
+  {
+    name: "Noah",
+    age: 20,
+    grade: 65,
+    city: "Montreal",
+    hobbies: ["art", "coding"],
+  },
+  {
+    name: "Ava",
+    age: 21,
+    grade: 95,
+    city: "Vancouver",
+    hobbies: ["reading", "sports"],
+  },
+];
+
+// let doubleAge = students.map((student) => {
+//   console.log(student.age * 2);
+// });
+
+const withStatus = students.map((s) => {
+  return { ...s, passed: s.grade > 70 ? "pass" : "failed" };
+});
+
+console.log(students);
+console.log(withStatus);
