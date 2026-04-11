@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Callbacks - Complete Class Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #1a73e8;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 15px;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .example {
+            background: #fff;
+            border-left: 5px solid #1a73e8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .task {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .output {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1557b0;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 JavaScript Callbacks - Complete Class Notes</h1>
+    <p><strong>For Students | Interactive Examples Included</strong></p>
+    <hr>
+
+    <div class="section">
+        <h2>1. What is a Callback Function?</h2>
+        <p>A <strong>callback</strong> is a function that is passed as an argument to another function and is executed after some operation is completed.</p>
+        
+        <div class="example">
+            <h3>Simple Analogy:</h3>
+            <p>Think of ordering food at a restaurant:</p>
+            <ul>
+                <li>You give your order to the waiter (main function)</li>
+                <li>The waiter goes to the kitchen and prepares food (asynchronous task)</li>
+                <li>When food is ready, the waiter calls you (callback function) to serve it</li>
+            </ul>
+        </div>
+
+        <pre><code>// Basic Callback Example
+
+function greet(name) {
+    console.log("Hello, " + name + "!");
+}
+
+function processUserInput(callback) {
+    const name = "Alice";
+    callback(name);        // Calling the callback
+}
+
+processUserInput(greet);   // Output: Hello, Alice!
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>2. Why Do We Need Callbacks?</h2>
+        <p>JavaScript is single-threaded and uses an event-driven, non-blocking I/O model. Callbacks allow us to handle asynchronous operations without blocking the main thread.</p>
+        
+        <h3>Common Use Cases:</h3>
+        <ul>
+            <li>setTimeout / setInterval</li>
+            <li>Event listeners (click, scroll, etc.)</li>
+            <li>Fetching data from server (AJAX / fetch)</li>
+            <li>File reading (Node.js fs module)</li>
+            <li>Array methods: forEach, map, filter, reduce</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Synchronous vs Asynchronous Callbacks</h2>
+
+        <h3>Synchronous Callback Example</h3>
+        <pre><code>function calculate(a, b, callback) {
+    const result = a + b;
+    callback(result);           // executed immediately
+}
+
+calculate(5, 10, function(result) {
+    console.log("Sum is:", result);   // Output: Sum is: 15
+});
+</code></pre>
+
+        <h3>Asynchronous Callback Example (using setTimeout)</h3>
+        <pre><code>console.log("Start");
+
+function fetchData(callback) {
+    setTimeout(function() {
+        const data = "Data loaded from server";
+        callback(data);
+    }, 2000);   // simulates 2 second delay
+}
+
+fetchData(function(result) {
+    console.log(result);   // runs after 2 seconds
+});
+
+console.log("End");
+// Output order: 
+// Start
+// End
+// Data loaded from server
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>4. Callback as Named Function vs Anonymous Function</h2>
+
+        <pre><code>// 1. Named Function Callback
+function showResult(result) {
+    console.log("Result:", result);
+}
+
+function add(a, b, callback) {
+    callback(a + b);
+}
+
+add(7, 8, showResult);
+
+// 2. Anonymous Function Callback
+add(10, 20, function(result) {
+    console.log("Anonymous Result:", result);
+});
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>5. Passing Multiple Callbacks (Error First Pattern)</h2>
+        <p>Common in Node.js style callbacks.</p>
+        
+        <pre><code>function divide(a, b, successCallback, errorCallback) {
+    if (b === 0) {
+        errorCallback("Cannot divide by zero!");
+        return;
+    }
+    successCallback(a / b);
+}
+
+divide(10, 2, 
+    function(result) { console.log("Success:", result); },
+    function(error) { console.log("Error:", error); }
+);
+
+divide(10, 0, 
+    function(result) { console.log("Success:", result); },
+    function(error) { console.log("Error:", error); }
+);
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>6. Real-World Example: Simulating API Call</h2>
+        
+        <button onclick="simulateAPICall()">Click to Simulate API Call</button>
+        <div id="apiOutput" class="output" style="margin-top:10px; min-height:50px;"></div>
+
+        <pre><code>function simulateAPICall() {
+    const output = document.getElementById("apiOutput");
+    output.textContent = "Fetching data...";
+
+    setTimeout(() => {
+        const users = [
+            { id: 1, name: "John" },
+            { id: 2, name: "Sarah" }
+        ];
+        
+        displayUsers(users);   // Callback
+    }, 1500);
+}
+
+function displayUsers(users) {
+    let html = "&lt;h3&gt;Users:&lt;/h3&gt;";
+    users.forEach(user => {
+        html += `&lt;p&gt;ID: ${user.id}, Name: ${user.name}&lt;/p&gt;`;
+    });
+    document.getElementById("apiOutput").innerHTML = html;
+}
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>7. Array Methods Using Callbacks</h2>
+
+        <h3>forEach()</h3>
+        <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach(function(num, index) {
+    console.log(`Index ${index}: ${num}`);
+});
+</code></pre>
+
+        <h3>map()</h3>
+        <pre><code>const doubled = numbers.map(function(num) {
+    return num * 2;
+});
+console.log(doubled); // [2, 4, 6, 8, 10]
+</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>8. Callback Hell (Pyramid of Doom)</h2>
+        <p>When callbacks are nested deeply, code becomes hard to read and maintain.</p>
+        
+        <pre><code>getUser(1, function(user) {
+    getPosts(user.id, function(posts) {
+        getComments(posts[0].id, function(comments) {
+            // Deep nesting...
+            console.log(comments);
+        });
+    });
+});
+</code></pre>
+        <p><strong>Solution:</strong> Use Promises or async/await (future topic)</p>
+    </div>
+
+    <!-- ==================== TASKS SECTION ==================== -->
+    <div class="section">
+        <h2>🛠️ Practice Tasks (Do these in order)</h2>
+
+        <div class="task">
+            <h3>Task 1: Basic Callback</h3>
+            <p>Create a function called <code>processOrder</code> that takes two parameters:</p>
+            <ul>
+                <li>foodItem (string)</li>
+                <li>callback function</li>
+            </ul>
+            <p>The function should log "Preparing [foodItem]..." and then call the callback with the message "Your [foodItem] is ready!" after 1.5 seconds.</p>
+            <p><strong>Hint:</strong> Use setTimeout</p>
+        </div>
+
+        <div class="task">
+            <h3>Task 2: Calculator with Callbacks</h3>
+            <p>Create a <code>calculator</code> function that accepts two numbers and a callback.</p>
+            <p>The callback should receive the result of addition, subtraction, multiplication, or division based on what operation you want.</p>
+            <p>Call the calculator 4 times with different operations using different callback functions.</p>
+        </div>
+
+        <div class="task">
+            <h3>Task 3: Event Simulation</h3>
+            <p>Create a button in HTML. When clicked, it should:</p>
+            <ol>
+                <li>Show "Loading..." message</li>
+                <li>After 2 seconds, call a callback function that displays "Data loaded successfully!" and changes button text to "Done"</li>
+            </ol>
+        </div>
+
+        <div class="task">
+            <h3>Task 4: Filter Array using Callback</h3>
+            <p>Write a custom <code>myFilter</code> function that works like Array.filter().</p>
+            <pre><code>function myFilter(array, callback) {
+    // Your code here
+}
+
+// Example usage:
+const numbers = [1, 2, 3, 4, 5, 6];
+const evenNumbers = myFilter(numbers, function(num) {
+    return num % 2 === 0;
+});
+console.log(evenNumbers); // Should output [2, 4, 6]
+</code></pre>
+        </div>
+
+        <div class="task">
+            <h3>Task 5: Advanced - Error Handling with Callbacks</h3>
+            <p>Create a function <code>loginUser(username, password, onSuccess, onError)</code> that:</p>
+            <ul>
+                <li>If username === "admin" and password === "1234", call onSuccess with user object</li>
+                <li>Otherwise call onError with error message</li>
+                <li>Simulate network delay with setTimeout (800ms)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>✅ Bonus Challenge</h2>
+        <p>Create a small "Todo List" where:</p>
+        <ul>
+            <li>You can add a task</li>
+            <li>After adding, it shows "Saving task..."</li>
+            <li>After 1 second, it shows "Task saved!" and adds to the list</li>
+        </ul>
+        <p>Use callbacks to handle the "saving" process.</p>
+    </div>
+
+    <hr>
+    <p style="text-align:center; color:#666; margin-top:50px;">
+        Prepared for teaching JavaScript Callbacks<br>
+        Practice all tasks and try to solve Callback Hell problem using Promises later!
+    </p>
+
+    <script>
+        // Live Demo for API simulation
+        function simulateAPICall() {
+            const output = document.getElementById("apiOutput");
+            output.style.background = "#fff3cd";
+            output.textContent = "Fetching data from server...";
+
+            setTimeout(() => {
+                const users = [
+                    { id: 1, name: "John Doe" },
+                    { id: 2, name: "Sarah Smith" },
+                    { id: 3, name: "Mike Johnson" }
+                ];
+                
+                let html = "<h3 style='margin:5px 0;'>✅ Users Loaded:</h3>";
+                users.forEach(user => {
+                    html += `<p style='margin:3px 0;'>👤 ${user.name} (ID: ${user.id})</p>`;
+                });
+                output.innerHTML = html;
+                output.style.background = "#d4edda";
+            }, 1500);
+        }
+
+        // Make simulateAPICall available globally for the button
+        window.simulateAPICall = simulateAPICall;
+    </script>
+
+</body>
+</html>
