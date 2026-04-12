@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Async JS Mastery 📌 | Callbacks • API Calls • Promises • Async/Await
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap");
+
+      :root {
+        --tw-color-primary: #00d4ff;
+      }
+
+      body {
+        font-family: "Inter", system_ui, sans-serif;
+      }
+
+      .heading-font {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .code-block {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        background: #0f172a;
+        border-radius: 12px;
+        padding: 1.25rem;
+        position: relative;
+      }
+
+      .nav-link {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .nav-link:hover {
+        transform: translateY(-2px);
+        color: #00d4ff;
+      }
+
+      .section-header {
+        position: relative;
+      }
+
+      .section-header::after {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, #00d4ff, #00ffaa);
+        bottom: -6px;
+        left: 0;
+        border-radius: 9999px;
+      }
+
+      .demo-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .demo-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 25px 50px -12px rgb(0 212 255 / 0.15);
+      }
+    </style>
+  </head>
+  <body class="bg-slate-950 text-slate-200 leading-relaxed">
+    <!-- HEADER -->
+    <div class="border-b border-slate-800 bg-slate-900 sticky top-0 z-50">
+      <div
+        class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-x-3">
+          <div
+            class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-emerald-400 rounded-2xl flex items-center justify-center text-white text-2xl shadow-inner"
+          >
+            ⚡
+          </div>
+          <h1 class="heading-font text-3xl tracking-tighter">
+            Async JS Mastery
+          </h1>
+        </div>
+        <div class="flex items-center gap-x-8 text-sm font-medium">
+          <a href="#callbacks" class="nav-link flex items-center gap-x-1">
+            <i class="fa-solid fa-hand-point-right"></i>
+            Callbacks
+          </a>
+          <a href="#apicalls" class="nav-link flex items-center gap-x-1">
+            <i class="fa-solid fa-globe"></i>
+            API Calls
+          </a>
+          <a href="#promises" class="nav-link flex items-center gap-x-1">
+            <i class="fa-solid fa-handshake"></i>
+            Promises
+          </a>
+          <a href="#asyncawait" class="nav-link flex items-center gap-x-1">
+            <i class="fa-solid fa-magic"></i>
+            Async/Await
+          </a>
+          <a
+            href="#task"
+            class="nav-link bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2 rounded-3xl flex items-center gap-x-2 text-sm font-semibold"
+          >
+            <i class="fa-solid fa-rocket"></i>
+            PRACTICE TASK
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <!-- HERO -->
+      <div class="text-center mb-16">
+        <div
+          class="inline-flex items-center gap-x-2 bg-slate-800 text-cyan-400 text-sm font-medium px-6 py-2 rounded-3xl mb-6"
+        >
+          <i class="fa-solid fa-waveform animate-pulse"></i>
+          JAVASCRIPT ASYNCHRONOUS PROGRAMMING
+        </div>
+        <h1 class="heading-font text-6xl leading-none tracking-tighter mb-4">
+          Callbacks, API Calls,<br />Promises &amp; Async/Await
+        </h1>
+        <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+          Master the heart of modern JavaScript. From old-school callbacks to
+          clean async/await — everything you need for real-world web
+          development.
+        </p>
+        <div class="flex justify-center gap-x-8 mt-8 text-sm">
+          <div class="flex items-center gap-x-2">
+            <div
+              class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"
+            ></div>
+            LIVE DEMOS INCLUDED
+          </div>
+          <div class="flex items-center gap-x-2">
+            <i class="fa-solid fa-code"></i>
+            Copy-Paste Ready Code
+          </div>
+          <div class="flex items-center gap-x-2">
+            <i class="fa-solid fa-briefcase"></i>
+            Real-World Use Cases
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK COMPARISON TABLE -->
+      <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 mb-16">
+        <h2 class="text-xl font-semibold mb-6 flex items-center gap-x-2">
+          <i class="fa-solid fa-table"></i>
+          Quick Comparison
+        </h2>
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-slate-700">
+              <th class="text-left py-4 font-medium text-slate-400">Feature</th>
+              <th class="text-left py-4 font-medium text-slate-400">
+                Callbacks
+              </th>
+              <th class="text-left py-4 font-medium text-slate-400">
+                Promises
+              </th>
+              <th class="text-left py-4 font-medium text-slate-400">
+                Async/Await
+              </th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="border-b border-slate-700">
+              <td class="py-5 font-medium">Readability</td>
+              <td class="py-5 text-amber-400">📉 Callback Hell</td>
+              <td class="py-5 text-yellow-400">📈 Better</td>
+              <td class="py-5 text-emerald-400">📈 Best (sync-like)</td>
+            </tr>
+            <tr class="border-b border-slate-700">
+              <td class="py-5 font-medium">Error Handling</td>
+              <td class="py-5 text-amber-400">Manual in every callback</td>
+              <td class="py-5 text-yellow-400">.catch() centralized</td>
+              <td class="py-5 text-emerald-400">try/catch (cleanest)</td>
+            </tr>
+            <tr class="border-b border-slate-700">
+              <td class="py-5 font-medium">Introduced</td>
+              <td class="py-5">1995 (JS v1)</td>
+              <td class="py-5">2015 (ES6)</td>
+              <td class="py-5">2017 (ES8)</td>
+            </tr>
+            <tr>
+              <td class="py-5 font-medium">Best For</td>
+              <td class="py-5">Simple one-off events</td>
+              <td class="py-5">Chaining async operations</td>
+              <td class="py-5">Modern apps &amp; clean code</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SECTION 1: CALLBACKS -->
+      <section id="callbacks" class="mb-24 scroll-mt-20">
+        <div class="flex items-center gap-x-4 mb-6">
+          <span class="text-4xl">📌</span>
+          <div>
+            <h2 class="section-header text-4xl font-semibold heading-font">
+              1. Callbacks
+            </h2>
+            <p class="text-slate-400">
+              The original way to handle asynchronous code
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-7">
+            <div class="prose prose-invert max-w-none">
+              <p class="text-lg">
+                A <strong class="text-cyan-300">callback</strong> is a function
+                passed as an argument to another function. It gets executed
+                after the first function finishes its work.
+              </p>
+              <p class="text-slate-400">
+                Used heavily before Promises existed. Still common in event
+                listeners, setTimeout, and older Node.js modules.
+              </p>
+            </div>
+
+            <div class="code-block mt-8">
+              <div
+                class="flex justify-between text-xs text-slate-400 mb-3 font-medium"
+              >
+                <span>EXAMPLE: setTimeout Callback</span>
+                <span
+                  class="text-emerald-400 cursor-pointer"
+                  onclick="copyCode(this)"
+                  >📋 Copy</span
+                >
+              </div>
+              <pre><code>function fetchData(callback) {
+    console.log("Fetching data...");
+    
+    setTimeout(() =&gt; {
+        const data = { id: 1, name: "Alex Rivera" };
+        callback(data);           // ← Callback is called here
+    }, 1500);
+}
+
+fetchData((result) =&gt; {
+    console.log("✅ Data received:", result);
+});</code></pre>
+            </div>
+
+            <div
+              class="mt-6 flex items-center gap-x-3 bg-slate-800/50 border border-slate-700 rounded-2xl p-4 text-sm"
+            >
+              <i class="fa-solid fa-lightbulb text-amber-400"></i>
+              <p>
+                <strong>Callback Hell</strong> happens when callbacks are nested
+                4–5 levels deep (also called “Pyramid of Doom”).
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div
+              class="demo-card bg-slate-900 border border-slate-700 rounded-3xl p-6 h-full"
+            >
+              <h4 class="font-semibold mb-4 flex items-center gap-x-2">
+                <i class="fa-solid fa-play"></i> Live Demo
+              </h4>
+              <button
+                onclick="runCallbackDemo()"
+                class="w-full bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-semibold py-4 rounded-2xl hover:brightness-110 transition"
+              >
+                Click to Simulate API Call with Callback
+              </button>
+              <div
+                id="callback-output"
+                class="mt-6 font-mono text-sm bg-slate-950 p-4 rounded-2xl min-h-[140px] text-emerald-300"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real World Use Case -->
+        <div
+          class="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl p-8"
+        >
+          <h3
+            class="text-cyan-300 font-semibold mb-3 flex items-center gap-x-2"
+          >
+            <i class="fa-solid fa-briefcase"></i> REAL-WORLD USE CASE
+          </h3>
+          <p class="text-lg">
+            <strong>Form Validation + Payment Gateway</strong>
+          </p>
+          <p class="text-slate-400">
+            Stripe, PayPal, and Razorpay still use callbacks for success/failure
+            handling:
+          </p>
+          <ul class="list-disc pl-6 mt-4 text-slate-300 space-y-2">
+            <li>stripe.confirmCardPayment(..., (result) =&gt; { ... })</li>
+            <li>Google Maps API: map.addListener('click', callback)</li>
+            <li>Node.js file system: fs.readFile(path, callback)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SECTION 2: API CALLS -->
+      <section id="apicalls" class="mb-24 scroll-mt-20">
+        <div class="flex items-center gap-x-4 mb-6">
+          <span class="text-4xl">🌐</span>
+          <div>
+            <h2 class="section-header text-4xl font-semibold heading-font">
+              2. API Calls
+            </h2>
+            <p class="text-slate-400">
+              Fetching data from servers in real time
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg max-w-3xl">
+          An API call is when your JavaScript talks to a backend server (REST,
+          GraphQL, etc.). Modern browsers use the
+          <code class="bg-slate-800 px-2 py-1 rounded">fetch()</code> API.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+          <div>
+            <h4 class="font-medium mb-3 text-amber-300">
+              Old Way (Callback-based)
+            </h4>
+            <div class="code-block">
+              <pre><code>const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/users/1");
+xhr.onload = function() {
+    if (xhr.status === 200) {
+        console.log(JSON.parse(xhr.responseText));
+    }
+};
+xhr.send();</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-medium mb-3 text-emerald-300">
+              Modern Way (fetch + Promise)
+            </h4>
+            <div class="code-block">
+              <pre><code>fetch("https://jsonplaceholder.typicode.com/users/1")
+  .then(res =&gt; res.json())
+  .then(data =&gt; console.log(data))
+  .catch(err =&gt; console.error(err));</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl p-8"
+        >
+          <h3
+            class="text-cyan-300 font-semibold mb-3 flex items-center gap-x-2"
+          >
+            <i class="fa-solid fa-briefcase"></i> REAL-WORLD USE CASE
+          </h3>
+          <p class="text-xl">
+            Weather App • E-commerce Product Search • Social Media Feed Refresh
+            • Banking Dashboard (real-time balance)
+          </p>
+          <p class="text-slate-400 mt-4">
+            Every time you scroll Instagram or click “Buy Now” on Amazon, an API
+            call is happening behind the scenes.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 3: PROMISES -->
+      <section id="promises" class="mb-24 scroll-mt-20">
+        <div class="flex items-center gap-x-4 mb-6">
+          <span class="text-4xl">🤝</span>
+          <div>
+            <h2 class="section-header text-4xl font-semibold heading-font">
+              3. Promises
+            </h2>
+            <p class="text-slate-400">
+              A cleaner way to handle async operations (ES6)
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg">
+          A Promise is an object that represents the eventual completion (or
+          failure) of an asynchronous operation.
+        </p>
+
+        <div class="code-block mt-8">
+          <div
+            class="flex justify-between text-xs text-slate-400 mb-3 font-medium"
+          >
+            <span>Creating &amp; Consuming a Promise</span>
+            <span
+              class="text-emerald-400 cursor-pointer"
+              onclick="copyCode(this)"
+              >📋 Copy</span
+            >
+          </div>
+          <pre><code>const getUser = () =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+        setTimeout(() =&gt; {
+            const success = true;
+            if (success) resolve({ name: "Sarah Chen", role: "Designer" });
+            else reject("User not found");
+        }, 1200);
+    });
+};
+
+// Using it
+getUser()
+    .then(user =&gt; console.log("✅", user))
+    .catch(error =&gt; console.error("❌", error)); </code></pre>
+        </div>
+
+        <div class="mt-12 grid grid-cols-3 gap-4 text-center">
+          <div
+            class="bg-emerald-900/30 border border-emerald-400/30 rounded-2xl p-4"
+          >
+            <div class="text-emerald-400 text-3xl mb-2">✅</div>
+            <strong>Resolved</strong><br /><span
+              class="text-xs text-emerald-400"
+              >.then()</span
+            >
+          </div>
+          <div class="bg-red-900/30 border border-red-400/30 rounded-2xl p-4">
+            <div class="text-red-400 text-3xl mb-2">❌</div>
+            <strong>Rejected</strong><br /><span class="text-xs text-red-400"
+              >.catch()</span
+            >
+          </div>
+          <div
+            class="bg-slate-700/50 border border-slate-400/30 rounded-2xl p-4"
+          >
+            <div class="text-slate-400 text-3xl mb-2">⏳</div>
+            <strong>Pending</strong><br /><span class="text-xs"
+              >Initial state</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl p-8"
+        >
+          <h3
+            class="text-cyan-300 font-semibold mb-3 flex items-center gap-x-2"
+          >
+            <i class="fa-solid fa-briefcase"></i> REAL-WORLD USE CASE
+          </h3>
+          <p class="text-xl">
+            Parallel API calls with
+            <code class="bg-slate-800 px-2 py-1 rounded">Promise.all()</code>
+          </p>
+          <p class="text-slate-400">
+            Fetching user profile + posts + notifications at the same time (used
+            in LinkedIn, Twitter/X, Netflix).
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ASYNC / AWAIT -->
+      <section id="asyncawait" class="mb-24 scroll-mt-20">
+        <div class="flex items-center gap-x-4 mb-6">
+          <span class="text-4xl">✨</span>
+          <div>
+            <h2 class="section-header text-4xl font-semibold heading-font">
+              4. Async / Await
+            </h2>
+            <p class="text-slate-400">
+              Syntactic sugar over Promises — code that looks synchronous (ES8)
+            </p>
+          </div>
+        </div>
+
+        <div class="code-block mt-8">
+          <div
+            class="flex justify-between text-xs text-slate-400 mb-3 font-medium"
+          >
+            <span>Async/Await Example (Cleanest way)</span>
+            <span
+              class="text-emerald-400 cursor-pointer"
+              onclick="copyCode(this)"
+              >📋 Copy</span
+            >
+          </div>
+          <pre><code>async function loadUserProfile() {
+    try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+        const user = await res.json();
+        
+        console.log("User loaded:", user);
+        
+        // You can await multiple times in sequence
+        const posts = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`);
+        const postData = await posts.json();
+        
+        return { user, posts: postData };
+    } catch (err) {
+        console.error("Something went wrong", err);
+    }
+}
+
+// Call it
+loadUserProfile().then(result =&gt; console.log(result));</code></pre>
+        </div>
+
+        <div
+          class="mt-10 flex items-center justify-center gap-x-8 text-sm bg-slate-900 border border-slate-700 rounded-3xl p-6"
+        >
+          <div class="text-center">
+            <div class="text-emerald-400">✅ No .then chains</div>
+          </div>
+          <div class="text-4xl text-slate-400">→</div>
+          <div class="text-center">
+            <div class="text-emerald-400">
+              ✅ try/catch works like sync code
+            </div>
+          </div>
+          <div class="text-4xl text-slate-400">→</div>
+          <div class="text-center">
+            <div class="text-emerald-400">
+              ✅ Much easier to read &amp; debug
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-12 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-3xl p-8"
+        >
+          <h3
+            class="text-cyan-300 font-semibold mb-3 flex items-center gap-x-2"
+          >
+            <i class="fa-solid fa-briefcase"></i> REAL-WORLD USE CASE
+          </h3>
+          <p class="text-xl">Full-stack modern apps:</p>
+          <ul class="grid grid-cols-2 gap-4 mt-6">
+            <li class="flex gap-x-3">
+              <span class="text-emerald-400">•</span> React / Next.js data
+              fetching (getServerSideProps)
+            </li>
+            <li class="flex gap-x-3">
+              <span class="text-emerald-400">•</span> Node.js Express API
+              controllers
+            </li>
+            <li class="flex gap-x-3">
+              <span class="text-emerald-400">•</span> Mobile apps with React
+              Native
+            </li>
+            <li class="flex gap-x-3">
+              <span class="text-emerald-400">•</span> Payment flows, file
+              uploads, AI API calls (OpenAI, Grok, etc.)
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PRACTICE TASK -->
+      <section
+        id="task"
+        class="scroll-mt-20 bg-gradient-to-br from-cyan-900/10 to-emerald-900/10 border-2 border-dashed border-cyan-400 rounded-3xl p-12"
+      >
+        <div class="flex justify-between items-start">
+          <div>
+            <span
+              class="px-4 py-1 bg-cyan-400 text-slate-950 rounded-3xl text-sm font-semibold"
+              >YOUR TURN</span
+            >
+            <h2 class="text-4xl heading-font mt-4">
+              Practice Task: Build a Real-Time User Loader
+            </h2>
+            <p class="mt-4 text-xl text-slate-300 max-w-xl">
+              Create a mini web app that fetches random users from
+              JSONPlaceholder using <strong>async/await</strong> and displays
+              them with loading &amp; error states.
+            </p>
+          </div>
+          <i class="fa-solid fa-rocket text-7xl text-cyan-400/30"></i>
+        </div>
+
+        <div class="mt-10">
+          <h4 class="font-semibold mb-4">Requirements:</h4>
+          <ol class="list-decimal pl-6 space-y-3 text-slate-300">
+            <li>
+              Use
+              <code class="bg-slate-800 px-2 py-px rounded">async/await</code> +
+              <code class="bg-slate-800 px-2 py-px rounded">fetch</code>
+            </li>
+            <li>Show a loading spinner while fetching</li>
+            <li>Display user name, email, and company</li>
+            <li>Handle errors gracefully (show nice error message)</li>
+            <li>Button to “Load New User” (fetch random user 1–10)</li>
+          </ol>
+        </div>
+
+        <!-- Starter HTML for students to copy -->
+        <div class="mt-12">
+          <p class="text-sm text-slate-400 mb-4 flex items-center gap-x-2">
+            <i class="fa-solid fa-copy"></i> Copy this starter template and
+            complete the JavaScript
+          </p>
+          <div class="code-block text-sm">
+            <pre><code>&lt;div id="app" class="max-w-md mx-auto"&gt;
+  &lt;button id="loadBtn"&gt;Load Random User&lt;/button&gt;
+  &lt;div id="result"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  // ← YOUR CODE GOES HERE
+  async function fetchRandomUser() {
+    // TODO: implement using async/await
+  }
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="https://jsonplaceholder.typicode.com"
+            target="_blank"
+            class="inline-flex items-center gap-x-2 bg-white text-slate-900 px-8 py-4 rounded-3xl font-semibold hover:bg-cyan-300 transition"
+          >
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Open JSONPlaceholder API (free fake data)
+          </a>
+        </div>
+
+        <p class="text-center text-xs text-slate-400 mt-8">
+          💡 Bonus: After finishing, refactor the same task using only Promises
+          (no async/await) and compare the readability!
+        </p>
+      </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div
+      class="border-t border-slate-800 bg-slate-900 py-8 text-center text-xs text-slate-400"
+    >
+      Made as interactive class notes • Feel free to modify &amp; share •
+      <span class="text-cyan-400">Master async = Master modern JS</span>
+    </div>
+
+    <script>
+      // Tailwind script initialization
+      function initializeTailwind() {
+        return {
+          config(userConfig = {}) {
+            return {
+              content: [],
+              theme: {
+                extend: {},
+              },
+              plugins: [],
+              ...userConfig,
+            };
+          },
+          theme(userConfig = {}) {
+            return {
+              ...this.defaultTheme(),
+              ...userConfig,
+            };
+          },
+          defaultTheme() {
+            return {
+              extend: {
+                colors: {
+                  primary: "#00d4ff",
+                },
+              },
+            };
+          },
+        };
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        return initializeTailwind().config();
+      });
+
+      // Demo callback function
+      function runCallbackDemo() {
+        const output = document.getElementById("callback-output");
+        output.innerHTML = `<span class="text-amber-300">⏳ Fetching data using callback...</span>`;
+
+        setTimeout(() => {
+          output.innerHTML = `
+                    <div class="flex items-center gap-x-3">
+                        <i class="fa-solid fa-check-circle text-emerald-400 text-xl"></i>
+                        <div>
+                            <strong class="block">✅ Callback executed!</strong>
+                            <span class="text-emerald-300">User: Jordan Patel • Role: Product Manager</span>
+                        </div>
+                    </div>`;
+        }, 1800);
+      }
+
+      // Copy code helper
+      function copyCode(el) {
+        const code = el.parentElement.nextElementSibling.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          const original = el.textContent;
+          el.textContent = "✅ Copied!";
+          setTimeout(() => {
+            el.textContent = original;
+          }, 1500);
+        });
+      }
+
+      console.log(
+        "%c✅ Async JS Notes loaded successfully! Ready for class 🚀",
+        "color:#00d4ff; font-family:monospace",
+      );
+    </script>
+  </body>
+</html>
