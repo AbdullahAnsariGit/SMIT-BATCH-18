@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6+ Advanced Features Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+        }
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        .highlight {
+            background: #e8f4fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        .note {
+            background: #fff3cd;
+            padding: 12px;
+            border-left: 5px solid #f39c12;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 ES6+ Advanced Features</h1>
+    <p style="text-align:center; font-size:1.1rem; color:#555;">
+        Deep Destructuring • Spread/Rest • Optional Chaining • Nullish Coalescing
+    </p>
+
+    <!-- ====================== DESTRUCTURING ====================== -->
+    <section>
+        <h2>1. Destructuring Assignment (Deep / Nested)</h2>
+        
+        <h3>Array Destructuring</h3>
+        <pre><code>// Basic
+const numbers = [10, 20, 30];
+const [a, b, c] = numbers;
+
+// Skipping values
+const [x, , z] = [100, 200, 300]; // x=100, z=300
+
+// Rest operator in arrays
+const [first, ...rest] = [1, 2, 3, 4, 5]; // first=1, rest=[2,3,4,5]</code></pre>
+
+        <h3>Object Destructuring</h3>
+        <pre><code>const user = {
+    name: "Minhaj",
+    age: 25,
+    address: {
+        city: "Karachi",
+        country: "Pakistan",
+        coordinates: { lat: 24.8607, lng: 67.0011 }
+    },
+    skills: ["JS", "React", "Node"]
+};
+
+// Basic
+const { name, age } = user;
+
+// Deep Destructuring
+const { 
+    name: fullName,
+    address: { 
+        city, 
+        coordinates: { lat, lng } 
+    },
+    skills: [primarySkill, ...otherSkills]
+} = user;
+
+console.log(fullName, city, lat, lng, primarySkill);
+// Output: Minhaj Karachi 24.8607 67.0011 JS</code></pre>
+
+        <div class="note">
+            <strong>Tip:</strong> You can rename variables using <code>original: newName</code>
+        </div>
+    </section>
+
+    <!-- ====================== SPREAD & REST ====================== -->
+    <section>
+        <h2>2. Spread (...) & Rest (...) Operator</h2>
+        
+        <h3>Spread Operator</h3>
+        <pre><code>// Arrays
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5, 6]; // [1,2,3,4,5,6]
+
+const clone = [...arr1]; // Shallow copy
+
+// Objects (most powerful)
+const person = { name: "Ali", age: 30 };
+const updated = { ...person, age: 31, city: "Lahore" }; // merged + override
+
+// Function arguments
+function sum(...numbers) { // Rest in parameters
+    return numbers.reduce((a, b) => a + b, 0);
+}
+sum(1, 2, 3, 4); // 10</code></pre>
+
+        <h3>Rest vs Spread</h3>
+        <ul>
+            <li><strong>Rest (...)</strong> → Collects remaining elements (used in destructuring & parameters)</li>
+            <li><strong>Spread (...)</strong> → Expands / spreads elements (used in arrays/objects/literals)</li>
+        </ul>
+    </section>
+
+    <!-- ====================== OPTIONAL CHAINING ====================== -->
+    <section>
+        <h2>3. Optional Chaining (?.)</h2>
+        <p>Prevents errors when accessing nested properties that might be <code>null</code> or <code>undefined</code>.</p>
+        
+        <pre><code>const user = {
+    name: "Sara",
+    profile: {
+        social: {
+            twitter: "@sara_dev"
+        }
+    }
+};
+
+// Old way (dangerous)
+const twitter = user && user.profile && user.profile.social && user.profile.social.twitter;
+
+// New way - Optional Chaining
+const twitterHandle = user?.profile?.social?.twitter;
+
+// With function call
+const result = user?.getData?.();
+
+// With array access
+const firstSkill = user?.skills?.[0];
+
+// Default value
+const city = user?.address?.city ?? "Not available";</code></pre>
+
+        <div class="note">
+            <strong>Important:</strong> <code>?.</code> stops evaluation if left side is <code>null</code> or <code>undefined</code>.
+        </div>
+    </section>
+
+    <!-- ====================== NULLISH COALESCING ====================== -->
+    <section>
+        <h2>4. Nullish Coalescing Operator (??)</h2>
+        <p>Returns right-hand side only if left-hand side is <code>null</code> or <code>undefined</code>.</p>
+        
+        <pre><code>const value1 = null;
+const value2 = undefined;
+const value3 = 0;
+const value4 = false;
+const value5 = "";
+
+console.log(value1 ?? "default");     // "default"
+console.log(value2 ?? "default");     // "default"
+console.log(value3 ?? "default");     // 0        (not falsy!)
+console.log(value4 ?? "default");     // false
+console.log(value5 ?? "default");     // ""
+
+// Comparison with ||
+console.log(0 || "default");          // "default"  ← problem!
+console.log(false || "default");      // "default"  ← problem!</code></pre>
+
+        <div class="note">
+            <strong>Best Practice:</strong> Use <code>??</code> when you want to treat <code>0</code>, <code>false</code>, and <code>""</code> as valid values.
+        </div>
+    </section>
+
+    <!-- ====================== COMBINED EXAMPLE ====================== -->
+    <section>
+        <h2>Real-World Combined Example</h2>
+        <pre><code>const config = {
+    api: {
+        baseURL: "https://api.example.com",
+        timeout: 5000
+    },
+    features: {
+        darkMode: false,
+        analytics: null
+    }
+};
+
+const settings = {
+    ...config,
+    api: {
+        ...config.api,
+        timeout: 10000
+    }
+};
+
+// Deep destructuring + optional chaining + nullish
+const {
+    api: { baseURL, timeout },
+    features: { darkMode = false, analytics }
+} = settings;
+
+const analyticsEnabled = analytics?.enabled ?? false;
+
+console.log(baseURL, timeout, darkMode, analyticsEnabled);</code></pre>
+    </section>
+
+    <footer style="text-align:center; margin-top:50px; color:#777;">
+        <p>ES6+ Modern JavaScript — Deep Destructuring, Spread/Rest, Optional Chaining &amp; Nullish Coalescing</p>
+    </footer>
+
+</body>
+</html>
