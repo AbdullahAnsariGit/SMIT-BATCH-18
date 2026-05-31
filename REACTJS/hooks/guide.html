@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>useEffect Documentation Guide</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0b1220;
+        color: #e5e7eb;
+        line-height: 1.6;
+      }
+
+      .container {
+        display: flex;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background: #111827;
+        padding: 20px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+      }
+
+      .sidebar h2 {
+        color: #38bdf8;
+      }
+
+      .sidebar a {
+        display: block;
+        color: #cbd5e1;
+        text-decoration: none;
+        margin: 10px 0;
+        font-size: 14px;
+      }
+
+      .sidebar a:hover {
+        color: #38bdf8;
+      }
+
+      /* Main content */
+      .content {
+        flex: 1;
+        padding: 30px;
+      }
+
+      h1 {
+        color: #38bdf8;
+      }
+
+      h2 {
+        margin-top: 40px;
+        color: #60a5fa;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 5px;
+      }
+
+      p {
+        color: #d1d5db;
+      }
+
+      code {
+        display: block;
+        background: #111827;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        overflow-x: auto;
+        color: #a5f3fc;
+      }
+
+      .box {
+        background: #111827;
+        padding: 15px;
+        border-left: 4px solid #38bdf8;
+        border-radius: 6px;
+        margin: 15px 0;
+      }
+
+      .note {
+        color: #facc15;
+      }
+
+      .good {
+        color: #4ade80;
+      }
+
+      .bad {
+        color: #f87171;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <h2>useEffect Docs</h2>
+        <a href="#intro">Introduction</a>
+        <a href="#syntax">Syntax</a>
+        <a href="#mount">Mount Phase</a>
+        <a href="#update">Update Phase</a>
+        <a href="#cleanup">Cleanup</a>
+        <a href="#api">API Calls</a>
+        <a href="#rules">Rules</a>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="content">
+        <h1>React useEffect Hook</h1>
+
+        <!-- INTRO -->
+        <h2 id="intro">1. Introduction</h2>
+        <p>
+          <b>useEffect</b> is a React Hook used to handle side effects in
+          functional components. Side effects include API calls, timers, event
+          listeners, and DOM updates.
+        </p>
+
+        <div class="box">
+          It runs after the component renders and helps manage external
+          operations outside React rendering flow.
+        </div>
+
+        <!-- SYNTAX -->
+        <h2 id="syntax">2. Syntax</h2>
+        <p>Basic structure of useEffect:</p>
+
+        <code>
+          useEffect(() => { // side effect logic here }, [dependencies]);
+        </code>
+
+        <p class="note">Dependency array controls when effect runs.</p>
+
+        <!-- MOUNT -->
+        <h2 id="mount">3. Mount Phase</h2>
+        <p>Runs only once when component loads.</p>
+
+        <code>
+          useEffect(() => { console.log("Component Mounted"); }, []);
+        </code>
+
+        <p class="good">✔ Used for initial API calls and setup logic.</p>
+
+        <!-- UPDATE -->
+        <h2 id="update">4. Update Phase</h2>
+        <p>Runs when specific state or props change.</p>
+
+        <code>
+          useEffect(() => { console.log("Value changed"); }, [count]);
+        </code>
+
+        <p class="good">✔ Useful for dynamic updates based on state changes.</p>
+
+        <!-- CLEANUP -->
+        <h2 id="cleanup">5. Cleanup Function</h2>
+        <p>Used to prevent memory leaks.</p>
+
+        <code>
+          useEffect(() => { const timer = setInterval(() => {
+          console.log("Running..."); }, 1000); return () => {
+          clearInterval(timer); }; }, []);
+        </code>
+
+        <p class="good">
+          ✔ Used for timers, subscriptions, and event listeners.
+        </p>
+
+        <!-- API -->
+        <h2 id="api">6. API Calls</h2>
+        <p>Most common use of useEffect.</p>
+
+        <code>
+          useEffect(() => { fetch("https://jsonplaceholder.typicode.com/users")
+          .then(res => res.json()) .then(data => console.log(data)); }, []);
+        </code>
+
+        <p class="good">✔ Fetch data when component loads.</p>
+
+        <!-- RULES -->
+        <h2 id="rules">7. Rules & Best Practices</h2>
+
+        <div class="box">
+          <p class="good">✔ Always use dependency array correctly</p>
+          <p class="good">✔ Always cleanup timers & listeners</p>
+          <p class="good">✔ Keep effects small and focused</p>
+          <p class="bad">
+            ❌ Avoid infinite loops (state update without dependency control)
+          </p>
+        </div>
+
+        <h2>Summary</h2>
+        <p>
+          useEffect controls side effects in React. It runs on mount, update,
+          and unmount phases depending on dependencies. Proper use improves
+          performance and prevents bugs.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

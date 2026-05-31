@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supabase Complete Guide</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a, #111827);
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #3ecf8e, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: #94a3b8;
+            max-width: 800px;
+            margin: auto;
+            font-size: 1.2rem;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: #111827;
+            padding: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 999;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: .3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #3ecf8e;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #3ecf8e;
+        }
+
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #06b6d4;
+        }
+
+        p {
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: #111827;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #3ecf8e;
+        }
+
+        .card h4 {
+            margin-bottom: 10px;
+            color: #3ecf8e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            text-align: left;
+        }
+
+        table th {
+            background: #1e293b;
+            color: #3ecf8e;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #d1d5db;
+        }
+
+        .highlight {
+            background: rgba(62, 207, 142, 0.1);
+            border-left: 4px solid #3ecf8e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .code {
+            background: #020617;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 20px;
+            color: #7dd3fc;
+            font-family: monospace;
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        @media(max-width:768px) {
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Supabase Complete Guide</h1>
+            <p>
+                A professional documentation guide covering Supabase,
+                Firebase comparison, SQL vs NoSQL databases,
+                backend architecture, and all major features.
+            </p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#why">Why Supabase</a></li>
+            <li><a href="#firebase">Supabase vs Firebase</a></li>
+            <li><a href="#sql">SQL vs NoSQL</a></li>
+            <li><a href="#backend">Custom Backend</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#security">Security</a></li>
+        </ul>
+    </nav>
+
+    <section id="intro">
+        <div class="container">
+            <h2>Introduction to Supabase</h2>
+
+            <p>
+                Supabase is an open-source Backend-as-a-Service (BaaS)
+                platform built on PostgreSQL. It provides everything
+                developers need to build scalable applications including:
+            </p>
+
+            <ul>
+                <li>Database</li>
+                <li>Authentication</li>
+                <li>Storage</li>
+                <li>Realtime APIs</li>
+                <li>Edge Functions</li>
+                <li>Analytics</li>
+            </ul>
+
+            <div class="highlight">
+                Supabase is widely considered the best open-source
+                alternative to Firebase.
+            </div>
+        </div>
+    </section>
+
+    <section id="why">
+        <div class="container">
+            <h2>Why We Should Use Supabase</h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h4>Open Source</h4>
+                    <p>Complete transparency and freedom from vendor lock-in.</p>
+                </div>
+
+                <div class="card">
+                    <h4>PostgreSQL</h4>
+                    <p>Built on one of the most powerful SQL databases.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Fast Development</h4>
+                    <p>Create production-ready backends quickly.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Realtime</h4>
+                    <p>Instant live updates using realtime subscriptions.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Authentication</h4>
+                    <p>Built-in login system with OAuth providers.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Scalable</h4>
+                    <p>Supports startups to enterprise-grade systems.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="firebase">
+        <div class="container">
+            <h2>Supabase vs Firebase</h2>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Supabase</th>
+                    <th>Firebase</th>
+                </tr>
+
+                <tr>
+                    <td>Database</td>
+                    <td>PostgreSQL (SQL)</td>
+                    <td>Firestore (NoSQL)</td>
+                </tr>
+
+                <tr>
+                    <td>Open Source</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+
+                <tr>
+                    <td>Realtime</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+
+                <tr>
+                    <td>Authentication</td>
+                    <td>Built-in</td>
+                    <td>Built-in</td>
+                </tr>
+
+                <tr>
+                    <td>Vendor Lock-in</td>
+                    <td>Low</td>
+                    <td>High</td>
+                </tr>
+
+                <tr>
+                    <td>Self Hosting</td>
+                    <td>Supported</td>
+                    <td>Not Supported</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="sql">
+        <div class="container">
+            <h2>SQL vs NoSQL Database</h2>
+
+            <h3>SQL Database</h3>
+
+            <ul>
+                <li>Structured data</li>
+                <li>Relationships between tables</li>
+                <li>Powerful queries</li>
+                <li>ACID transactions</li>
+            </ul>
+
+            <h3>NoSQL Database</h3>
+
+            <ul>
+                <li>Flexible schema</li>
+                <li>Document-based storage</li>
+                <li>Horizontal scaling</li>
+                <li>Fast prototyping</li>
+            </ul>
+
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>SQL</th>
+                    <th>NoSQL</th>
+                </tr>
+
+                <tr>
+                    <td>Schema</td>
+                    <td>Fixed</td>
+                    <td>Flexible</td>
+                </tr>
+
+                <tr>
+                    <td>Relationships</td>
+                    <td>Strong</td>
+                    <td>Weak</td>
+                </tr>
+
+                <tr>
+                    <td>Complex Queries</td>
+                    <td>Excellent</td>
+                    <td>Limited</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="backend">
+        <div class="container">
+            <h2>Custom Backend vs Supabase</h2>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Custom Backend</th>
+                    <th>Supabase</th>
+                </tr>
+
+                <tr>
+                    <td>Development Time</td>
+                    <td>Slow</td>
+                    <td>Fast</td>
+                </tr>
+
+                <tr>
+                    <td>Authentication</td>
+                    <td>Manual</td>
+                    <td>Built-in</td>
+                </tr>
+
+                <tr>
+                    <td>Realtime APIs</td>
+                    <td>Manual</td>
+                    <td>Automatic</td>
+                </tr>
+
+                <tr>
+                    <td>Infrastructure</td>
+                    <td>Managed by Developer</td>
+                    <td>Managed by Supabase</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2>Complete Features of Supabase</h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h4>Database</h4>
+                    <p>Managed PostgreSQL database with SQL support.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Authentication</h4>
+                    <p>Email, Google, GitHub, Magic Links, OAuth.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Storage</h4>
+                    <p>Store images, videos, files and documents.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Realtime Engine</h4>
+                    <p>Realtime subscriptions for live applications.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Edge Functions</h4>
+                    <p>Serverless backend functions globally deployed.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Auto APIs</h4>
+                    <p>REST APIs automatically generated from database.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Row Level Security</h4>
+                    <p>Fine-grained access control for database rows.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Vector Database</h4>
+                    <p>AI embeddings and semantic search support.</p>
+                </div>
+
+            </div>
+
+            <h3>Supabase Client Example</h3>
+
+            <div class="code">
+                const supabase = createClient(
+                'https://project.supabase.co',
+                'public-anon-key'
+                );
+            </div>
+        </div>
+    </section>
+
+    <section id="security">
+        <div class="container">
+            <h2>Security in Supabase</h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h4>JWT Authentication</h4>
+                    <p>Secure sessions using token-based authentication.</p>
+                </div>
+
+                <div class="card">
+                    <h4>SSL Encryption</h4>
+                    <p>Encrypted secure communication.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Role-Based Access</h4>
+                    <p>Permission management with database roles.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Row Level Security</h4>
+                    <p>Protect data at database level.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Supabase Professional Documentation Guide • HTML & CSS</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete React.js Guide</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f6f9;
+      color:#222;
+      line-height:1.7;
+    }
+
+    header{
+      background:#20232a;
+      color:white;
+      padding:40px 20px;
+      text-align:center;
+    }
+
+    header h1{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    header p{
+      font-size:18px;
+      color:#61dafb;
+    }
+
+    nav{
+      background:white;
+      padding:20px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    nav ul{
+      display:flex;
+      flex-wrap:wrap;
+      gap:15px;
+      list-style:none;
+      justify-content:center;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:#20232a;
+      font-weight:bold;
+    }
+
+    nav a:hover{
+      color:#61dafb;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px;
+    }
+
+    section{
+      background:white;
+      margin-bottom:30px;
+      padding:30px;
+      border-radius:10px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2{
+      color:#20232a;
+      margin-bottom:20px;
+      border-left:6px solid #61dafb;
+      padding-left:10px;
+    }
+
+    h3{
+      margin-top:20px;
+      margin-bottom:10px;
+      color:#444;
+    }
+
+    p{
+      margin-bottom:15px;
+    }
+
+    ul{
+      margin-left:20px;
+      margin-bottom:15px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:20px;
+      margin-bottom:20px;
+    }
+
+    table th,
+    table td{
+      border:1px solid #ccc;
+      padding:12px;
+      text-align:left;
+    }
+
+    table th{
+      background:#20232a;
+      color:white;
+    }
+
+    pre{
+      background:#1e1e1e;
+      color:#00ff90;
+      padding:20px;
+      overflow:auto;
+      border-radius:8px;
+      margin-top:15px;
+      margin-bottom:15px;
+    }
+
+    code{
+      font-family:Consolas;
+    }
+
+    footer{
+      background:#20232a;
+      color:white;
+      text-align:center;
+      padding:30px;
+      margin-top:40px;
+    }
+
+    .highlight{
+      color:#61dafb;
+      font-weight:bold;
+    }
+
+    @media(max-width:768px){
+      header h1{
+        font-size:30px;
+      }
+
+      nav ul{
+        flex-direction:column;
+        align-items:center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Complete React.js Guide</h1>
+    <p>Learn React.js from Beginner to Advanced</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#html">HTML Basics</a></li>
+      <li><a href="#dom">DOM</a></li>
+      <li><a href="#comparison">React vs JS</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#why">Why Learn React</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#jsx">JSX</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#hooks">Hooks</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <section id="intro">
+      <h2>1. Introduction to React.js</h2>
+
+      <p>
+        React.js is one of the most popular JavaScript libraries used for building modern user interfaces and web applications.
+      </p>
+
+      <p>
+        React was developed by Facebook (Meta) and is used in:
+      </p>
+
+      <ul>
+        <li>Facebook</li>
+        <li>Instagram</li>
+        <li>Netflix</li>
+        <li>Airbnb</li>
+        <li>WhatsApp Web</li>
+      </ul>
+
+      <p>
+        React helps developers create fast, scalable, and interactive web applications.
+      </p>
+    </section>
+
+    <section id="html">
+      <h2>2. HTML Basics</h2>
+
+      <p>
+        HTML (HyperText Markup Language) is used to structure web pages.
+      </p>
+
+      <h3>Basic HTML Example</h3>
+
+      <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;h1&gt;Hello World&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph&lt;/p&gt;
+  &lt;button&gt;Click&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+
+      <h3>Common HTML Tags</h3>
+
+      <table>
+        <tr>
+          <th>Tag</th>
+          <th>Purpose</th>
+        </tr>
+
+        <tr>
+          <td>&lt;h1&gt;</td>
+          <td>Heading</td>
+        </tr>
+
+        <tr>
+          <td>&lt;p&gt;</td>
+          <td>Paragraph</td>
+        </tr>
+
+        <tr>
+          <td>&lt;div&gt;</td>
+          <td>Container</td>
+        </tr>
+
+        <tr>
+          <td>&lt;button&gt;</td>
+          <td>Button</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="dom">
+      <h2>3. Understanding the DOM</h2>
+
+      <p>
+        DOM stands for <span class="highlight">Document Object Model</span>.
+      </p>
+
+      <p>
+        It represents the structure of a webpage as a tree.
+      </p>
+
+      <h3>DOM Manipulation Example</h3>
+
+      <pre><code>
+&lt;h1 id="title"&gt;Hello&lt;/h1&gt;
+
+&lt;script&gt;
+  document.getElementById("title").innerText = "Welcome";
+&lt;/script&gt;
+      </code></pre>
+    </section>
+
+    <section id="comparison">
+      <h2>4. React vs Plain JavaScript DOM</h2>
+
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>React</th>
+          <th>Plain JavaScript</th>
+        </tr>
+
+        <tr>
+          <td>DOM</td>
+          <td>Virtual DOM</td>
+          <td>Real DOM</td>
+        </tr>
+
+        <tr>
+          <td>Performance</td>
+          <td>Fast</td>
+          <td>Slower</td>
+        </tr>
+
+        <tr>
+          <td>Code Reusability</td>
+          <td>High</td>
+          <td>Low</td>
+        </tr>
+
+        <tr>
+          <td>Scalability</td>
+          <td>Excellent</td>
+          <td>Limited</td>
+        </tr>
+
+        <tr>
+          <td>Maintainability</td>
+          <td>Easy</td>
+          <td>Difficult</td>
+        </tr>
+      </table>
+
+      <h3>Plain JavaScript Example</h3>
+
+      <pre><code>
+&lt;button id="btn"&gt;Increment&lt;/button&gt;
+&lt;p id="count"&gt;0&lt;/p&gt;
+
+&lt;script&gt;
+  let count = 0;
+
+  document.getElementById("btn")
+  .addEventListener("click", () =&gt; {
+    count++;
+    document.getElementById("count").innerText = count;
+  });
+&lt;/script&gt;
+      </code></pre>
+
+      <h3>React Example</h3>
+
+      <pre><code>
+import { useState } from "react";
+
+function Counter() {
+
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+      </code></pre>
+    </section>
+
+    <section id="features">
+      <h2>5. Features of React</h2>
+
+      <ul>
+        <li>Component-Based Architecture</li>
+        <li>Virtual DOM</li>
+        <li>Reusable Components</li>
+        <li>Fast Rendering</li>
+        <li>JSX Syntax</li>
+        <li>Hooks</li>
+        <li>One-Way Data Binding</li>
+        <li>Strong Community Support</li>
+      </ul>
+
+      <h3>JSX Example</h3>
+
+      <pre><code>
+const element = &lt;h1&gt;Hello React&lt;/h1&gt;;
+      </code></pre>
+    </section>
+
+    <section id="why">
+      <h2>6. Why Should We Learn React?</h2>
+
+      <ul>
+        <li>High demand in industry</li>
+        <li>Easy to learn</li>
+        <li>Excellent career opportunities</li>
+        <li>Fast web applications</li>
+        <li>Reusable components save time</li>
+        <li>Used by top companies</li>
+        <li>Supports mobile app development</li>
+      </ul>
+    </section>
+
+    <section id="setup">
+      <h2>7. Setting Up React</h2>
+
+      <h3>Step 1: Install Node.js</h3>
+
+      <p>Download Node.js from:</p>
+
+      <pre><code>
+https://nodejs.org
+      </code></pre>
+
+      <h3>Step 2: Create React App</h3>
+
+      <pre><code>
+npm create vite@latest my-app
+      </code></pre>
+
+      <h3>Step 3: Move into Project</h3>
+
+      <pre><code>
+cd my-app
+      </code></pre>
+
+      <h3>Step 4: Install Dependencies</h3>
+
+      <pre><code>
+npm install
+      </code></pre>
+
+      <h3>Step 5: Run Project</h3>
+
+      <pre><code>
+npm run dev
+      </code></pre>
+    </section>
+
+    <section id="jsx">
+      <h2>8. JSX in React</h2>
+
+      <p>
+        JSX stands for JavaScript XML.
+      </p>
+
+      <p>
+        It allows writing HTML inside JavaScript.
+      </p>
+
+      <pre><code>
+function App() {
+  return &lt;h1&gt;Hello React&lt;/h1&gt;;
+}
+      </code></pre>
+
+      <h3>JSX Rules</h3>
+
+      <ul>
+        <li>Return one parent element</li>
+        <li>Use className instead of class</li>
+        <li>Close all tags</li>
+      </ul>
+    </section>
+
+    <section id="components">
+      <h2>9. Components in React</h2>
+
+      <h3>Functional Component</h3>
+
+      <pre><code>
+function Welcome() {
+  return &lt;h1&gt;Welcome&lt;/h1&gt;;
+}
+      </code></pre>
+
+      <h3>Props Example</h3>
+
+      <pre><code>
+function User(props) {
+  return &lt;h1&gt;{props.name}&lt;/h1&gt;;
+}
+
+function App() {
+  return &lt;User name="Ali" /&gt;;
+}
+      </code></pre>
+
+      <h3>State Example</h3>
+
+      <pre><code>
+import { useState } from "react";
+
+function Counter() {
+
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      {count}
+    &lt;/button&gt;
+  );
+}
+      </code></pre>
+    </section>
+
+    <section id="hooks">
+      <h2>10. Hooks in React</h2>
+
+      <h3>Common Hooks</h3>
+
+      <table>
+        <tr>
+          <th>Hook</th>
+          <th>Purpose</th>
+        </tr>
+
+        <tr>
+          <td>useState</td>
+          <td>State Management</td>
+        </tr>
+
+        <tr>
+          <td>useEffect</td>
+          <td>Side Effects</td>
+        </tr>
+
+        <tr>
+          <td>useContext</td>
+          <td>Global Data</td>
+        </tr>
+
+        <tr>
+          <td>useRef</td>
+          <td>DOM Reference</td>
+        </tr>
+      </table>
+
+      <h3>useEffect Example</h3>
+
+      <pre><code>
+import { useEffect } from "react";
+
+function App() {
+
+  useEffect(() => {
+    console.log("Component Mounted");
+  }, []);
+
+  return &lt;h1&gt;Hello&lt;/h1&gt;;
+}
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>11. Advantages of React</h2>
+
+      <ul>
+        <li>Fast Performance</li>
+        <li>Reusable Components</li>
+        <li>Large Ecosystem</li>
+        <li>Strong Community</li>
+        <li>Easy UI Updates</li>
+        <li>SEO Friendly</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>12. Disadvantages of React</h2>
+
+      <ul>
+        <li>Requires JavaScript knowledge</li>
+        <li>Fast-changing ecosystem</li>
+        <li>Additional libraries required</li>
+        <li>JSX may feel confusing initially</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>13. Career Opportunities</h2>
+
+      <ul>
+        <li>Frontend Developer</li>
+        <li>React Developer</li>
+        <li>Full Stack Developer</li>
+        <li>UI Engineer</li>
+        <li>React Native Developer</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>14. React Learning Roadmap</h2>
+
+      <h3>Beginner</h3>
+
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>ES6</li>
+        <li>React Basics</li>
+      </ul>
+
+      <h3>Intermediate</h3>
+
+      <ul>
+        <li>Hooks</li>
+        <li>Routing</li>
+        <li>API Calls</li>
+        <li>Forms</li>
+      </ul>
+
+      <h3>Advanced</h3>
+
+      <ul>
+        <li>Redux</li>
+        <li>Next.js</li>
+        <li>TypeScript</li>
+        <li>Performance Optimization</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>15. Conclusion</h2>
+
+      <p>
+        React.js is one of the best technologies for modern web development.
+      </p>
+
+      <p>
+        It helps developers build:
+      </p>
+
+      <ul>
+        <li>Fast applications</li>
+        <li>Interactive websites</li>
+        <li>Scalable projects</li>
+        <li>Reusable UI components</li>
+      </ul>
+
+      <p>
+        Learning React can open many career opportunities in frontend and full-stack development.
+      </p>
+    </section>
+
+  </div>
+
+  <footer>
+    <h3>Complete React.js Guide</h3>
+    <p>Created using HTML & CSS</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>API Methods Documentation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      padding: 30px;
+      line-height: 1.7;
+      color: #333;
+    }
+    h1, h2 {
+      color: #1a2a3a;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    code {
+      background: #eef;
+      display: block;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+    }
+    ul {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🚀 API Methods & Request Structure Documentation</h1>
+
+<!-- GET -->
+<div class="card">
+  <h2>GET → Data Fetch</h2>
+  <p>GET method ka use server se data retrieve karne ke liye hota hai.</p>
+
+  <h3>Key Points:</h3>
+  <ul>
+    <li>Body nahi hoti</li>
+    <li>Data URL ke through bheja jata hai (Query Params)</li>
+    <li>Safe & idempotent hota hai</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('https://api.example.com/users?page=1&limit=10')
+  .then(res => res.json())
+  .then(data => console.log(data));
+  </code>
+</div>
+
+<!-- POST -->
+<div class="card">
+  <h2>POST → Create Data</h2>
+  <p>POST method new resource create karne ke liye use hota hai.</p>
+
+  <h3>Key Points:</h3>
+  <ul>
+    <li>Body required hoti hai</li>
+    <li>Mostly JSON format use hota hai</li>
+    <li>Server par new entry create karta hai</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('https://api.example.com/users', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'Minhaj',
+    email: 'minhaj@gmail.com'
+  })
+});
+  </code>
+</div>
+
+<!-- PUT -->
+<div class="card">
+  <h2>PUT → Full Update</h2>
+  <p>PUT method existing resource ko completely replace karta hai.</p>
+
+  <h3>Key Points:</h3>
+  <ul>
+    <li>Pura object bhejna zaroori hota hai</li>
+    <li>Agar koi field missing ho → wo remove ho sakti hai</li>
+    <li>Idempotent hota hai</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('https://api.example.com/users/1', {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'Updated Name',
+    email: 'updated@gmail.com'
+  })
+});
+  </code>
+</div>
+
+<!-- PATCH -->
+<div class="card">
+  <h2>PATCH → Partial Update</h2>
+  <p>PATCH method sirf specific fields update karta hai.</p>
+
+  <h3>Key Points:</h3>
+  <ul>
+    <li>Sirf changed fields bhejte hain</li>
+    <li>Efficient hota hai</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('https://api.example.com/users/1', {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'Only Name Updated'
+  })
+});
+  </code>
+</div>
+
+<!-- DELETE -->
+<div class="card">
+  <h2>DELETE → Remove Data</h2>
+  <p>DELETE method resource ko server se remove karta hai.</p>
+
+  <h3>Key Points:</h3>
+  <ul>
+    <li>Usually body nahi hoti</li>
+    <li>ID URL me hota hai</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('https://api.example.com/users/1', {
+  method: 'DELETE'
+});
+  </code>
+</div>
+
+<!-- HEADERS -->
+<div class="card">
+  <h2>Headers → Auth & Metadata</h2>
+  <p>Headers request ke sath additional information bhejte hain.</p>
+
+  <h3>Common Headers:</h3>
+  <ul>
+    <li>Content-Type → data format define karta hai</li>
+    <li>Authorization → token bhejne ke liye</li>
+    <li>Custom headers → x-api-key waghera</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <code>
+fetch('/api/private', {
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer your_token_here'
+  }
+});
+  </code>
+</div>
+
+<!-- BODY -->
+<div class="card">
+  <h2>Body → Send Data</h2>
+  <p>Body me data server ko bheja jata hai (mostly POST, PUT, PATCH me).</p>
+
+  <h3>Types:</h3>
+  <ul>
+    <li>JSON (most common)</li>
+    <li>FormData (file upload)</li>
+    <li>URL Encoded</li>
+  </ul>
+
+  <h3>JSON Example:</h3>
+  <code>
+body: JSON.stringify({
+  name: 'Minhaj'
+})
+  </code>
+
+  <h3>FormData Example:</h3>
+  <code>
+const formData = new FormData();
+formData.append('file', fileInput.files[0]);
+
+fetch('/upload', {
+  method: 'POST',
+  body: formData
+});
+  </code>
+</div>
+
+<!-- SUMMARY -->
+<div class="card">
+  <h2>📊 Summary</h2>
+  <ul>
+    <li><b>GET</b> → Data fetch</li>
+    <li><b>POST</b> → Create</li>
+    <li><b>PUT</b> → Full update</li>
+    <li><b>PATCH</b> → Partial update</li>
+    <li><b>DELETE</b> → Remove</li>
+    <li><b>Headers</b> → Auth & metadata</li>
+    <li><b>Body</b> → Data send</li>
+  </ul>
+</div>
+
+</body>
+</html>

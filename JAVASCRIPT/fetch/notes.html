@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Mastery: Fetch + Async/Await</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        .code-block {
+            font-family: ui-monospace, monospace;
+        }
+        .demo-result {
+            min-height: 120px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 px-8">
+            <div class="flex items-center gap-4">
+                <i class="fas fa-code text-5xl"></i>
+                <div>
+                    <h1 class="text-4xl font-bold">Fetch + Async/Await</h1>
+                    <p class="text-blue-100 text-xl mt-2">Master modern JavaScript asynchronous programming</p>
+                </div>
+            </div>
+            <div class="mt-6 flex gap-4 text-sm">
+                <span class="bg-white/20 px-4 py-1 rounded-full">Beginner to Intermediate</span>
+                <span class="bg-white/20 px-4 py-1 rounded-full">Interactive Examples</span>
+            </div>
+        </header>
+
+        <div class="flex">
+            <!-- Sidebar Navigation -->
+            <nav class="w-64 bg-white border-r border-gray-200 min-h-screen p-6 hidden lg:block">
+                <div class="sticky top-6">
+                    <h2 class="font-semibold text-gray-500 mb-4 text-xs uppercase tracking-widest">Contents</h2>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#intro" class="block py-2 px-4 hover:bg-blue-50 rounded-lg text-blue-600 font-medium">Introduction</a></li>
+                        <li><a href="#fetch" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">The Fetch API</a></li>
+                        <li><a href="#promises" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">Promise Style</a></li>
+                        <li><a href="#async" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">Async / Await</a></li>
+                        <li><a href="#comparison" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">Comparison</a></li>
+                        <li><a href="#proscons" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">Pros &amp; Cons</a></li>
+                        <li><a href="#when" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">When to Use What</a></li>
+                        <li><a href="#demo" class="block py-2 px-4 hover:bg-blue-50 rounded-lg">Live Demo</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-8">
+                
+                <!-- Introduction -->
+                <section id="intro" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6">Understanding Asynchronous JavaScript</h2>
+                    <div class="prose max-w-none">
+                        <p class="text-lg text-gray-600">
+                            Modern web development requires fetching data from servers without freezing the UI. 
+                            JavaScript provides two powerful tools: <strong>Fetch API</strong> and <strong>Async/Await</strong>.
+                        </p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mt-10">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                            <div class="text-4xl mb-4">🌐</div>
+                            <h3 class="font-semibold text-xl">Fetch API</h3>
+                            <p class="text-gray-600 mt-2">A modern way to make HTTP requests. Returns a Promise.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border">
+                            <div class="text-4xl mb-4">⏳</div>
+                            <h3 class="font-semibold text-xl">Async/Await</h3>
+                            <p class="text-gray-600 mt-2">Syntactic sugar over Promises that makes async code look synchronous.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fetch API -->
+                <section id="fetch" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-4">The Fetch API</h2>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm">
+                        <pre class="code-block bg-gray-900 text-gray-100 p-6 rounded-xl overflow-auto text-sm leading-relaxed"><code>fetch('https://api.example.com/data')
+  .then(response =&gt; {
+    if (!response.ok) throw new Error('Network error');
+    return response.json();
+  })
+  .then(data =&gt; console.log(data))
+  .catch(error =&gt; console.error(error));</code></pre>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500">Fetch is promise-based and built into modern browsers.</p>
+                </section>
+
+                <!-- Promise Style -->
+                <section id="promises" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6">Promise Chaining (Traditional)</h2>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm">
+                        <button onclick="demoPromise()" 
+                                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium flex items-center gap-2">
+                            <i class="fas fa-play"></i>
+                            Run Promise Demo
+                        </button>
+                        <div id="promise-result" class="demo-result mt-6 p-6 bg-gray-50 rounded-2xl text-sm font-mono"></div>
+                    </div>
+                </section>
+
+                <!-- Async/Await -->
+                <section id="async" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6">Async / Await</h2>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm">
+                        <pre class="code-block bg-gray-900 text-gray-100 p-6 rounded-xl overflow-auto text-sm leading-relaxed"><code>async function getData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    if (!response.ok) throw new Error('Failed');
+    
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}</code></pre>
+                    </div>
+                </section>
+
+                <!-- Live Demo -->
+                <section id="demo" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6">Live Interactive Demo</h2>
+                    <div class="bg-white border border-gray-200 rounded-3xl p-8">
+                        <div class="flex gap-4 mb-8">
+                            <button onclick="fetchWithPromise()" 
+                                    class="flex-1 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-medium">
+                                Fetch with .then()
+                            </button>
+                            <button onclick="fetchWithAsync()" 
+                                    class="flex-1 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-medium">
+                                Fetch with async/await
+                            </button>
+                        </div>
+                        
+                        <div id="live-result" class="bg-gray-900 text-green-400 p-6 rounded-2xl font-mono text-sm min-h-[200px] overflow-auto"></div>
+                    </div>
+                </section>
+
+                <!-- Comparison -->
+                <section id="comparison" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-8">Side-by-Side Comparison</h2>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-4 text-left">Feature</th>
+                                <th class="p-4 text-left">Promise (.then)</th>
+                                <th class="p-4 text-left">Async/Await</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr>
+                                <td class="p-4 font-medium">Readability</td>
+                                <td class="p-4 text-amber-600">Nested chains can get messy</td>
+                                <td class="p-4 text-emerald-600">Looks like synchronous code</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium">Error Handling</td>
+                                <td class="p-4">.catch() at the end</td>
+                                <td class="p-4">try/catch blocks (more natural)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-medium">Debugging</td>
+                                <td class="p-4">Harder with deep chains</td>
+                                <td class="p-4">Easy - works with breakpoints</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Pros and Cons -->
+                <section id="proscons" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-8">Pros &amp; Cons</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Fetch / Promise -->
+                        <div>
+                            <h3 class="font-semibold text-xl mb-4 flex items-center gap-2">
+                                <span class="text-orange-500">Promise + Fetch</span>
+                            </h3>
+                            <div class="space-y-6">
+                                <div class="bg-emerald-50 p-6 rounded-2xl">
+                                    <h4 class="font-medium text-emerald-700 mb-3">✅ Pros</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li>• Native browser support</li>
+                                        <li>• Great for simple requests</li>
+                                        <li>• Easy to chain multiple operations</li>
+                                        <li>• Better for libraries that return promises</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-rose-50 p-6 rounded-2xl">
+                                    <h4 class="font-medium text-rose-700 mb-3">❌ Cons</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li>• Callback hell with many requests</li>
+                                        <li>• Error handling scattered</li>
+                                        <li>• Less readable for complex flows</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Async/Await -->
+                        <div>
+                            <h3 class="font-semibold text-xl mb-4 flex items-center gap-2">
+                                <span class="text-emerald-500">Async/Await</span>
+                            </h3>
+                            <div class="space-y-6">
+                                <div class="bg-emerald-50 p-6 rounded-2xl">
+                                    <h4 class="font-medium text-emerald-700 mb-3">✅ Pros</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li>• Much cleaner and readable code</li>
+                                        <li>• Natural error handling with try/catch</li>
+                                        <li>• Easier to write sequential async logic</li>
+                                        <li>• Better for complex business logic</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-rose-50 p-6 rounded-2xl">
+                                    <h4 class="font-medium text-rose-700 mb-3">❌ Cons</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li>• Still runs on top of Promises</li>
+                                        <li>• Cannot be used at top level (needs async function)</li>
+                                        <li>• Slight performance overhead (negligible)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- When to Use What -->
+                <section id="when" class="mb-16 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-10">
+                    <h2 class="text-3xl font-bold mb-8">When Should You Use What?</h2>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-2xl">
+                            <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-4">1</div>
+                            <h4 class="font-semibold">Simple API calls</h4>
+                            <p class="text-sm text-gray-600 mt-3">Use <strong>Fetch + .then()</strong></p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-4">2</div>
+                            <h4 class="font-semibold">Complex logic</h4>
+                            <p class="text-sm text-gray-600 mt-3">Use <strong>Async/Await</strong></p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl">
+                            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4">3</div>
+                            <h4 class="font-semibold">Libraries &amp; Frameworks</h4>
+                            <p class="text-sm text-gray-600 mt-3">Both work — async/await is preferred for readability</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="text-center py-12 text-gray-400 text-sm">
+                    Made for students • Practice by modifying the code examples
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script already loaded via CDN
+
+        function logResult(elementId, message, isError = false) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const timestamp = new Date().toLocaleTimeString();
+            el.innerHTML += `<div class="${isError ? 'text-red-400' : 'text-emerald-400'}">[${timestamp}] ${message}</div>`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        // Demo 1: Promise
+        function demoPromise() {
+            const resultEl = document.getElementById('promise-result');
+            resultEl.innerHTML = '<span class="text-blue-500">Fetching random user data...</span>';
+            
+            fetch('https://jsonplaceholder.typicode.com/users/1')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch');
+                    return response.json();
+                })
+                .then(user => {
+                    resultEl.innerHTML = `
+                        <strong class="text-emerald-600">✅ Success!</strong><br>
+                        Name: ${user.name}<br>
+                        Email: ${user.email}<br>
+                        Company: ${user.company.name}
+                    `;
+                })
+                .catch(err => {
+                    resultEl.innerHTML = `<span class="text-red-500">❌ ${err.message}</span>`;
+                });
+        }
+
+        // Live Demo Functions
+        async function fetchWithPromise() {
+            const resultEl = document.getElementById('live-result');
+            resultEl.innerHTML = '<span class="text-amber-400">→ Using Promise chain...</span><br><br>';
+            
+            fetch('https://jsonplaceholder.typicode.com/posts/5')
+                .then(res => res.json())
+                .then(post => {
+                    resultEl.innerHTML += `✅ Post Title: ${post.title.substring(0, 60)}...`;
+                })
+                .catch(err => {
+                    resultEl.innerHTML += `❌ Error: ${err.message}`;
+                });
+        }
+
+        async function fetchWithAsync() {
+            const resultEl = document.getElementById('live-result');
+            resultEl.innerHTML = '<span class="text-emerald-400">→ Using async/await...</span><br><br>';
+            
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/todos/3');
+                const todo = await response.json();
+                resultEl.innerHTML += `✅ Todo: ${todo.title}<br>Completed: ${todo.completed ? 'Yes' : 'No'}`;
+            } catch (err) {
+                resultEl.innerHTML += `❌ Error: ${err.message}`;
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== "TEXTAREA" && document.activeElement.tagName !== "INPUT") {
+                e.preventDefault();
+                // You could add search functionality here
+            }
+        });
+
+        // Auto scroll to section on load if hash present
+        window.onload = function() {
+            if (window.location.hash) {
+                const el = document.querySelector(window.location.hash);
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Upload</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 40px;
+        background: #f5f5f5;
+      }
+      .upload-box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      input,
+      button {
+        margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    raw json type
+    let payload = { title:"avbc", description:"abc" }
+
+
+    image with text data
+
+     const file = input.files[0];
+
+  // FormData object
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("title", "abcc");
+  formData.append("description", "jsdjs");
+
+    <div class="upload-box">
+      <h2>Upload Image</h2>
+
+      <form
+        action="http://localhost:5000/upload"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="image" accept="image/*" required />
+
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </body>
+</html>

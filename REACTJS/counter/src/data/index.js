@@ -1,0 +1,36 @@
+const cardsData = [
+  { title: "card 1", desc: "this is desc", price: "10" },
+  { title: "card 2", desc: "this is desc new", price: "20" },
+  { title: "card 3", desc: "this is desc", price: "30" },
+  { title: "card 4", desc: "this is desc", price: "40" },
+  { title: "card 5", desc: "this is desc", price: "50" },
+  { title: "card 6", desc: "this is desc", price: "60" },
+  { title: "card 7", desc: "this is desc", price: "70" },
+  { title: "card 8", desc: "this is desc", price: "80" },
+  { title: "card 9", desc: "this is desc", price: "90" },
+  { title: "card 10", desc: "this is desc", price: "100" },
+  { title: "card 11", desc: "this is desc", price: "110" },
+  { title: "card 12", desc: "this is desc", price: "120" },
+  { title: "card 13", desc: "this is desc", price: "130" },
+  { title: "card 14", desc: "this is desc", price: "140" },
+  { title: "card 15", desc: "this is desc", price: "150" },
+  { title: "card 16", desc: "this is desc", price: "160" },
+  { title: "card 17", desc: "this is desc", price: "170" },
+  { title: "card 18", desc: "this is desc", price: "180" },
+  { title: "card 19", desc: "this is desc", price: "190" },
+  { title: "card 20", desc: "this is desc", price: "200" },
+  { title: "card 21", desc: "this is desc", price: "210" },
+  { title: "card 22", desc: "this is desc", price: "220" },
+  { title: "card 23", desc: "this is desc", price: "230" },
+  { title: "card 24", desc: "this is desc", price: "240" },
+  { title: "card 25", desc: "this is desc", price: "250" },
+  { title: "card 26", desc: "this is desc", price: "260" },
+  { title: "card 27", desc: "this is desc", price: "270" },
+  { title: "card 28", desc: "this is desc", price: "280" },
+  { title: "card 29", desc: "this is desc", price: "290" },
+  { title: "card 30", desc: "this is desc", price: "300" },
+];
+
+const ab = [{}];
+
+export { cardsData, ab };
