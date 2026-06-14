@@ -1,19 +1,27 @@
 import React from "react";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import About from "./screens/about";
-import Contact from "./screens/contact";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ErrorPage from "./component/ErrorPage";
 import Admin from "./screens/admin/Admin";
-import Product from "./screens/admin/Product";
-import AdminCategories from "./screens/admin/Categories";
+import Login from "./screens/auth/Login";
+import SignUp from "./screens/auth/SignUp";
+import Home from "./screens/home";
+import ProtectedRoute from "./component/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Admin />}>
-          <Route path="product" element={<Product />} />
-          <Route path="category" element={<AdminCategories />} />
-        </Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        {/* <Route path="/admin" element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>} /> */}
+        <Route path="/admin" element={<ProtectedRoute children={<Admin />} />} />
+
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

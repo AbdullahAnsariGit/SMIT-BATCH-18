@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./adminProduct.css";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminProduct() {
   const [products, setProducts] = useState([]);
@@ -40,6 +41,8 @@ export default function AdminProduct() {
   const handleDelete = (index) => {
     setProducts(products.filter((_, i) => i !== index));
   };
+
+
 
   return (
     <div className="admin-container">
