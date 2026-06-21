@@ -2,6 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Login() {
+
+    const payload = {
+        email,
+        password
+    }
+
+    let token = email+password 
+
+    localStorage(token)
+    
+    
     return (
         <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg">
             <h2 class="text-3xl font-bold text-center mb-6">Welcome Back</h2>

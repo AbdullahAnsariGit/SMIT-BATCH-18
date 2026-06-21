@@ -2,6 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function SignUp() {
+    const [user, setUser] = useState(null);
+
+
+    console.log(user, "useruser")
+
+
     return (
         <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg">
             <h2 class="text-3xl font-bold text-center mb-6">Create Account</h2>
@@ -13,6 +19,7 @@ function SignUp() {
                         type="text"
                         placeholder="John Doe"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        onChange={(e) => setUser((prev) => ({ ...prev, fullname: e.target.fullname }))}
                     />
                 </div>
 
@@ -22,6 +29,8 @@ function SignUp() {
                         type="email"
                         placeholder="you@example.com"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        onChange={(e) => setUser((prev) => ({ ...prev, fullname: e.target.email }))}
+
                     />
                 </div>
 
@@ -31,6 +40,8 @@ function SignUp() {
                         type="password"
                         placeholder="********"
                         class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        onChange={(e) => setUser((prev) => ({ ...prev, fullname: e.target.password }))}
+
                     />
                 </div>
 
@@ -44,7 +55,7 @@ function SignUp() {
 
             <p class="text-center text-sm mt-4">
                 Already have an account?
-                <Link  to="/login" class="text-blue-600 hover:underline">Login</Link>
+                <Link to="/login" class="text-blue-600 hover:underline">Login</Link>
             </p>
         </div>
     )
