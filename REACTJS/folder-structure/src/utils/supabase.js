@@ -6,4 +6,4 @@ const shabanaKey = import.meta.env.SHABANA_KEY
 
 
 
-export const myBackend = createClient(saleemUrl, shabanaKey)
+export const supabase = createClient(saleemUrl, shabanaKey)
