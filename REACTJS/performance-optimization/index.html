@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Performance: memo, useMemo & useCallback</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent2: #a78bfa;
+            --green: #4ade80;
+            --orange: #fb923c;
+            --pink: #f472b6;
+            --code-bg: #0b1120;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 1.9rem;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.75rem;
+        }
+
+        section h2 {
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-memo {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+        }
+
+        .badge-usememo {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--accent2);
+        }
+
+        .badge-usecallback {
+            background: rgba(244, 114, 182, 0.15);
+            color: var(--pink);
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            margin: 1.25rem 0 0.5rem;
+            color: var(--accent);
+        }
+
+        p,
+        li {
+            color: var(--text);
+            margin-bottom: 0.6rem;
+        }
+
+        ul,
+        ol {
+            padding-left: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+
+        .highlight {
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        .warning {
+            color: var(--orange);
+            font-weight: 500;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0.75rem 0 1rem;
+        }
+
+        code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+        }
+
+        .inline-code {
+            background: var(--code-bg);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+            color: var(--accent);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 640px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .box h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--muted);
+        }
+
+        .use-case {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid var(--accent);
+            padding: 0.85rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .use-case strong {
+            color: var(--accent);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+        }
+
+        th {
+            background: var(--code-bg);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>React Performance Hooks & HOC</h1>
+            <p>Detailed notes on <strong>React.memo</strong>, <strong>useMemo</strong> & <strong>useCallback</strong>
+            </p>
+        </header>
+
+        <!-- ===================== React.memo ===================== -->
+        <section>
+            <h2>
+                <span class="badge badge-memo">HOC</span>
+                React.memo
+            </h2>
+
+            <p>
+                <span class="inline-code">React.memo</span> is a <strong>Higher-Order Component</strong> that memoizes a
+                functional component.
+                It prevents the component from re-rendering if its <strong>props have not changed</strong> (shallow
+                comparison by default).
+            </p>
+
+            <h3>How it works</h3>
+            <ul>
+                <li>Wraps a component and caches the last rendered result.</li>
+                <li>On next render, React compares previous props with new props using <span
+                        class="inline-code">Object.is</span> (shallow).</li>
+                <li>If props are the same → skips re-render and reuses the previous result.</li>
+                <li>If props changed → re-renders normally.</li>
+            </ul>
+
+            <h3>Basic Syntax</h3>
+            <pre><code>import React from 'react';
+
+const MyComponent = React.memo(function MyComponent({ name, age }) {
+  console.log('Rendered!');
+  return &lt;div&gt;{name} is {age} years old&lt;/div&gt;;
+});
+
+// Or with arrow function
+const MyComponent = React.memo(({ name, age }) => {
+  return &lt;div&gt;{name} is {age} years old&lt;/div&gt;;
+});</code></pre>
+
+            <h3>Custom Comparison Function (optional)</h3>
+            <p>You can pass a second argument to control when the component should re-render:</p>
+            <pre><code>const MyComponent = React.memo(
+  ({ user }) => &lt;div&gt;{user.name}&lt;/div&gt;,
+  (prevProps, nextProps) => {
+    // return true if props are equal (skip re-render)
+    // return false if props are different (re-render)
+    return prevProps.user.id === nextProps.user.id;
+  }
+);</code></pre>
+
+            <div class="use-case">
+                <strong>Use Cases:</strong>
+                <ul>
+                    <li>Pure presentational / dumb components that receive the same props often.</li>
+                    <li>List items in large lists (e.g. <span class="inline-code">TodoItem</span>, <span
+                            class="inline-code">UserCard</span>).</li>
+                    <li>Components that are expensive to render and whose props rarely change.</li>
+                    <li>When a parent re-renders frequently but the child doesn’t need to.</li>
+                </ul>
+            </div>
+
+            <h3>Example – Preventing Unnecessary Re-renders</h3>
+            <pre><code>const ExpensiveChild = React.memo(({ count }) => {
+  console.log('ExpensiveChild rendered');
+  // Imagine heavy calculation or complex UI here
+  return &lt;div&gt;Count from parent: {count}&lt;/div&gt;;
+});
+
+function Parent() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+
+  return (
+    &lt;&gt;
+      &lt;input value={text} onChange={e => setText(e.target.value)} /&gt;
+      &lt;button onClick={() => setCount(c => c + 1)}&gt;Increment&lt;/button&gt;
+      &lt;ExpensiveChild count={count} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+            <p>
+                Without <span class="inline-code">React.memo</span>, typing in the input would re-render <span
+                    class="inline-code">ExpensiveChild</span> every time.
+                With memo, it only re-renders when <span class="inline-code">count</span> changes.
+            </p>
+
+            <p class="warning">⚠ Note: React.memo only does a shallow comparison of props. If you pass
+                objects/arrays/functions that are recreated on every render, memo will not help unless you also memoize
+                those values (see useMemo / useCallback).</p>
+        </section>
+
+        <!-- ===================== useMemo ===================== -->
+        <section>
+            <h2>
+                <span class="badge badge-usememo">Hook</span>
+                useMemo
+            </h2>
+
+            <p>
+                <span class="inline-code">useMemo</span> is a React Hook that <strong>memoizes the result of a
+                    calculation</strong>.
+                It only recomputes the value when one of its dependencies changes.
+            </p>
+
+            <h3>Syntax</h3>
+            <pre><code>const memoizedValue = useMemo(() => {
+  // expensive calculation
+  return computeExpensiveValue(a, b);
+}, [a, b]); // dependency array</code></pre>
+
+            <h3>How it works</h3>
+            <ul>
+                <li>On first render → runs the function and stores the result.</li>
+                <li>On later renders → if dependencies are the same (shallow compare) → returns the cached value.</li>
+                <li>If any dependency changed → re-runs the function and updates the cache.</li>
+            </ul>
+
+            <h3>Example 1 – Expensive Calculation</h3>
+            <pre><code>function ProductList({ products, filterText }) {
+  // This filter runs only when products or filterText change
+  const filteredProducts = useMemo(() => {
+    console.log('Filtering products...');
+    return products.filter(p =>
+      p.name.toLowerCase().includes(filterText.toLowerCase())
+    );
+  }, [products, filterText]);
+
+  return (
+    &lt;ul&gt;
+      {filteredProducts.map(p => &lt;li key={p.id}&gt;{p.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+
+            <h3>Example 2 – Creating Stable Object / Array References</h3>
+            <pre><code>function Parent({ userId }) {
+  // Without useMemo, this object is new on every render
+  // → child with React.memo would re-render every time
+  const options = useMemo(() => ({
+    userId,
+    theme: 'dark',
+    sortBy: 'date'
+  }), [userId]);
+
+  return &lt;Child options={options} /&gt;;
+}
+
+const Child = React.memo(({ options }) => {
+  console.log('Child rendered');
+  return &lt;div&gt;User: {options.userId}&lt;/div&gt;;
+});</code></pre>
+
+            <div class="use-case">
+                <strong>Use Cases:</strong>
+                <ul>
+                    <li>Expensive calculations (filtering, sorting, mapping large lists, complex math).</li>
+                    <li>Creating objects or arrays that are passed as props to memoized children.</li>
+                    <li>Derived data that depends on other state/props.</li>
+                    <li>Values used in dependency arrays of other hooks (to keep them stable).</li>
+                </ul>
+            </div>
+
+            <p class="warning">⚠ Don’t overuse useMemo. Only use it when the calculation is actually expensive or when
+                you need a stable reference. Premature optimization can make code harder to read.</p>
+        </section>
+
+        <!-- ===================== useCallback ===================== -->
+        <section>
+            <h2>
+                <span class="badge badge-usecallback">Hook</span>
+                useCallback
+            </h2>
+
+            <p>
+                <span class="inline-code">useCallback</span> is a React Hook that <strong>memoizes a function</strong>.
+                It returns the same function instance between renders as long as its dependencies haven’t changed.
+            </p>
+
+            <h3>Syntax</h3>
+            <pre><code>const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);</code></pre>
+
+            <p>
+                <span class="inline-code">useCallback(fn, deps)</span> is equivalent to
+                <span class="inline-code">useMemo(() => fn, deps)</span>.
+            </p>
+
+            <h3>Why do we need it?</h3>
+            <p>
+                In JavaScript, functions are recreated on every render. If you pass a function as a prop to a
+                <span class="inline-code">React.memo</span> component (or use it in a dependency array), a new function
+                reference
+                will cause unnecessary re-renders or effect re-runs.
+            </p>
+
+            <h3>Example – Stable Callback for Memoized Child</h3>
+            <pre><code>function Parent() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+
+  // Without useCallback → new function every render → Child re-renders
+  const handleClick = useCallback(() => {
+    console.log('Button clicked, count:', count);
+    setCount(c => c + 1);
+  }, [count]); // or [] if you don't need count inside
+
+  return (
+    &lt;&gt;
+      &lt;input value={text} onChange={e => setText(e.target.value)} /&gt;
+      &lt;Child onClick={handleClick} /&gt;
+    &lt;/&gt;
+  );
+}
+
+const Child = React.memo(({ onClick }) => {
+  console.log('Child rendered');
+  return &lt;button onClick={onClick}&gt;Click me&lt;/button&gt;;
+});</code></pre>
+
+            <h3>Example – Dependency of useEffect</h3>
+            <pre><code>function Search({ query }) {
+  const fetchResults = useCallback(() => {
+    // fetch logic using query
+    console.log('Fetching for', query);
+  }, [query]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]); // safe because fetchResults is stable unless query changes
+
+  return &lt;div&gt;Searching...&lt;/div&gt;;
+}</code></pre>
+
+            <div class="use-case">
+                <strong>Use Cases:</strong>
+                <ul>
+                    <li>Passing callbacks to memoized child components (<span class="inline-code">React.memo</span>).
+                    </li>
+                    <li>Functions used as dependencies in <span class="inline-code">useEffect</span>, <span
+                            class="inline-code">useMemo</span>, or other hooks.</li>
+                    <li>Event handlers that should keep the same reference across renders.</li>
+                    <li>Optimizing components that receive many function props.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===================== Comparison ===================== -->
+        <section>
+            <h2>Quick Comparison</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>React.memo</th>
+                        <th>useMemo</th>
+                        <th>useCallback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Type</strong></td>
+                        <td>Higher-Order Component</td>
+                        <td>Hook</td>
+                        <td>Hook</td>
+                    </tr>
+                    <tr>
+                        <td><strong>What it memoizes</strong></td>
+                        <td>Entire component</td>
+                        <td>Return value of a function</td>
+                        <td>Function itself</td>
+                    </tr>
+                    <tr>
+                        <td><strong>When to use</strong></td>
+                        <td>Prevent re-render of component</td>
+                        <td>Cache expensive calculation / object</td>
+                        <td>Cache function reference</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dependency</strong></td>
+                        <td>Props (shallow)</td>
+                        <td>Dependency array</td>
+                        <td>Dependency array</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Returns</strong></td>
+                        <td>Memoized component</td>
+                        <td>Memoized value</td>
+                        <td>Memoized function</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>They work best together</h3>
+            <pre><code>// Parent creates stable values + stable functions
+const data = useMemo(() => processData(raw), [raw]);
+const onSave = useCallback(() => save(data), [data]);
+
+// Child is protected by React.memo
+const Child = React.memo(({ data, onSave }) => {
+  // only re-renders when data or onSave actually change
+  return &lt;button onClick={onSave}&gt;Save&lt;/button&gt;;
+});</code></pre>
+        </section>
+
+        <!-- ===================== Best Practices ===================== -->
+        <section>
+            <h2>Best Practices & Common Pitfalls</h2>
+
+            <ul>
+                <li>
+                    <span class="highlight">Measure first</span> — Use React DevTools Profiler. Don’t add memoization
+                    everywhere.
+                </li>
+                <li>
+                    <span class="highlight">Shallow comparison only</span> — Objects, arrays and functions are compared
+                    by reference.
+                    Always memoize them if they are passed to memoized children.
+                </li>
+                <li>
+                    <span class="warning">Empty dependency array</span> — <span class="inline-code">useMemo(() => ...,
+                        [])</span> and
+                    <span class="inline-code">useCallback(() => ..., [])</span> run only once (like on mount).
+                </li>
+                <li>
+                    Missing dependencies can cause stale closures (bugs). Always include everything the
+                    function/calculation uses.
+                </li>
+                <li>
+                    <span class="inline-code">useCallback</span> does <strong>not</strong> prevent the function from
+                    being created —
+                    it only returns the previous instance when deps are equal. The creation still happens, but the
+                    reference is stable.
+                </li>
+                <li>
+                    Prefer <span class="inline-code">useCallback</span> when the function is passed down or used in
+                    deps.
+                    Prefer <span class="inline-code">useMemo</span> when you care about the <em>result</em> of a
+                    calculation.
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            React.memo + useMemo + useCallback — Core tools for controlling re-renders and performance in React.
+        </footer>
+    </div>
+</body>
+
+</html>
