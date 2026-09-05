@@ -1,0 +1,666 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>MongoDB Documentation</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span>🍃</span>
+            MongoDB Docs
+        </div>
+
+        <nav>
+            <a href="#introduction">Introduction</a>
+            <a href="#what-is-mongodb">What is MongoDB?</a>
+            <a href="#why-mongodb">Why MongoDB?</a>
+            <a href="#concepts">Basic Concepts</a>
+            <a href="#use-cases">Use Cases</a>
+            <a href="#sql-vs-nosql">SQL vs NoSQL</a>
+            <a href="#real-world">Real-World Examples</a>
+            <a href="#advantages">Advantages</a>
+            <a href="#limitations">Limitations</a>
+            <a href="#summary">Summary</a>
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Hero -->
+        <section class="hero" id="introduction">
+
+            <span class="badge">DATABASE DOCUMENTATION</span>
+
+            <h1>MongoDB</h1>
+
+            <p>
+                A beginner-friendly guide to understanding MongoDB,
+                NoSQL databases, use cases, and real-world applications.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#what-is-mongodb" class="btn primary">
+                    Start Learning →
+                </a>
+
+                <a href="#sql-vs-nosql" class="btn secondary">
+                    SQL vs NoSQL
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- What is MongoDB -->
+        <section class="section" id="what-is-mongodb">
+
+            <div class="section-title">
+                <span>01</span>
+                <h2>MongoDB kya hai?</h2>
+            </div>
+
+            <p>
+                MongoDB ek <strong>NoSQL, document-oriented database</strong> hai.
+                Ismein data traditional rows aur columns ke bajaye
+                JSON-like documents ke form mein store hota hai.
+            </p>
+
+            <p>
+                MongoDB internally <strong>BSON (Binary JSON)</strong> format
+                use karta hai.
+            </p>
+
+            <div class="code-box">
+                <div class="code-header">
+                    <span>user document</span>
+                    <span>JSON</span>
+                </div>
+
+                <pre><code>{
+  "name": "Ali",
+  "age": 20,
+  "email": "ali@example.com",
+  "skills": [
+    "JavaScript",
+    "React",
+    "Node.js"
+  ]
+}</code></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- MongoDB Structure -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>02</span>
+                <h2>MongoDB Structure</h2>
+            </div>
+
+            <p>
+                MongoDB mein data kuch is tarah organize hota hai:
+            </p>
+
+            <div class="structure">
+
+                <div class="structure-item">
+                    <strong>Database</strong>
+                    <small>Application ka main data container</small>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="structure-item">
+                    <strong>Collection</strong>
+                    <small>Documents ka group</small>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="structure-item">
+                    <strong>Document</strong>
+                    <small>Individual data record</small>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="structure-item">
+                    <strong>Field</strong>
+                    <small>Document ki individual property</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Why MongoDB -->
+        <section class="section" id="why-mongodb">
+
+            <div class="section-title">
+                <span>03</span>
+                <h2>MongoDB kyun use karte hain?</h2>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Flexible</h3>
+                    <p>
+                        MongoDB ka document structure flexible hota hai,
+                        isliye changing requirements ke saath data model evolve
+                        karna easier ho sakta hai.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📄</div>
+                    <h3>Document Based</h3>
+                    <p>
+                        Data JSON-like documents mein store hota hai,
+                        jo JavaScript applications ke liye natural feel hota hai.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📈</div>
+                    <h3>Scalable</h3>
+                    <p>
+                        MongoDB large workloads ke liye horizontal scaling
+                        capabilities provide karta hai.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Developer Friendly</h3>
+                    <p>
+                        Node.js aur JavaScript ecosystem ke saath MongoDB
+                        commonly use kiya jata hai.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Basic Concepts -->
+        <section class="section" id="concepts">
+
+            <div class="section-title">
+                <span>04</span>
+                <h2>Basic Concepts</h2>
+            </div>
+
+            <div class="concept-grid">
+
+                <div class="concept">
+                    <h3>Database</h3>
+                    <p>
+                        Related collections ka container.
+                    </p>
+                </div>
+
+                <div class="concept">
+                    <h3>Collection</h3>
+                    <p>
+                        SQL table ke similar concept.
+                    </p>
+                </div>
+
+                <div class="concept">
+                    <h3>Document</h3>
+                    <p>
+                        MongoDB ka individual data record.
+                    </p>
+                </div>
+
+                <div class="concept">
+                    <h3>Field</h3>
+                    <p>
+                        Document ke andar individual property.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Example -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>05</span>
+                <h2>MongoDB CRUD Example</h2>
+            </div>
+
+            <h3>Insert Document</h3>
+
+            <div class="code-box">
+                <pre><code>db.students.insertOne({
+  name: "Ali",
+  age: 20,
+  course: "Web Development"
+});</code></pre>
+            </div>
+
+
+            <h3>Find Document</h3>
+
+            <div class="code-box">
+                <pre><code>db.students.find({
+  name: "Ali"
+});</code></pre>
+            </div>
+
+
+            <h3>Update Document</h3>
+
+            <div class="code-box">
+                <pre><code>db.students.updateOne(
+  { name: "Ali" },
+  { $set: { age: 21 } }
+);</code></pre>
+            </div>
+
+
+            <h3>Delete Document</h3>
+
+            <div class="code-box">
+                <pre><code>db.students.deleteOne({
+  name: "Ali"
+});</code></pre>
+            </div>
+
+        </section>
+
+
+        <!-- Use Cases -->
+        <section class="section" id="use-cases">
+
+            <div class="section-title">
+                <span>06</span>
+                <h2>MongoDB Use Cases</h2>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">🛒</div>
+                    <h3>E-Commerce</h3>
+                    <p>
+                        Products, users, orders, carts and reviews store karne
+                        ke liye use kiya ja sakta hai.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h3>Chat Applications</h3>
+                    <p>
+                        Chat messages, conversations and notifications
+                        manage kiye ja sakte hain.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Social Media</h3>
+                    <p>
+                        Posts, comments, likes, followers aur notifications
+                        jaise data ke liye useful ho sakta hai.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Blogging</h3>
+                    <p>
+                        Blog posts, authors, categories, tags aur comments
+                        manage karne ke liye use ho sakta hai.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SQL vs NoSQL -->
+        <section class="section" id="sql-vs-nosql">
+
+            <div class="section-title">
+                <span>07</span>
+                <h2>SQL vs NoSQL</h2>
+            </div>
+
+            <p>
+                SQL databases relational tables use karti hain,
+                jabke NoSQL databases different data models use kar sakti hain.
+                MongoDB ek document-oriented NoSQL database hai.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>SQL</th>
+                            <th>MongoDB / NoSQL</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Table</td>
+                            <td>Collection</td>
+                        </tr>
+
+                        <tr>
+                            <td>Row</td>
+                            <td>Document</td>
+                        </tr>
+
+                        <tr>
+                            <td>Column</td>
+                            <td>Field</td>
+                        </tr>
+
+                        <tr>
+                            <td>Relational</td>
+                            <td>Document-oriented</td>
+                        </tr>
+
+                        <tr>
+                            <td>Usually predefined schema</td>
+                            <td>Flexible document structure</td>
+                        </tr>
+
+                        <tr>
+                            <td>JOINs</td>
+                            <td>Embedding / References</td>
+                        </tr>
+
+                        <tr>
+                            <td>SQL Query</td>
+                            <td>MongoDB Query API</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- SQL Example -->
+        <section class="section">
+
+            <div class="comparison">
+
+                <div>
+                    <h3>SQL Query</h3>
+
+                    <div class="code-box">
+                        <pre><code>SELECT *
+FROM users
+WHERE age > 18;</code></pre>
+                    </div>
+                </div>
+
+
+                <div>
+                    <h3>MongoDB Query</h3>
+
+                    <div class="code-box">
+                        <pre><code>db.users.find({
+  age: { $gt: 18 }
+});</code></pre>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Real World -->
+        <section class="section" id="real-world">
+
+            <div class="section-title">
+                <span>08</span>
+                <h2>Real-World Use Case</h2>
+            </div>
+
+            <h3>🛒 E-Commerce Application</h3>
+
+            <p>
+                Imagine karein ke hum ek online shopping application bana rahe hain.
+            </p>
+
+            <div class="architecture">
+
+                <div>React</div>
+                <span>→</span>
+                <div>Express.js</div>
+                <span>→</span>
+                <div>Node.js</div>
+                <span>→</span>
+                <div class="mongodb">MongoDB</div>
+
+            </div>
+
+
+            <h3>Product Document</h3>
+
+            <div class="code-box">
+                <pre><code>{
+  "name": "Laptop",
+  "price": 120000,
+  "category": "Electronics",
+
+  "specifications": {
+    "ram": "16GB",
+    "storage": "512GB SSD"
+  }
+}</code></pre>
+            </div>
+
+
+            <h3>Order Document</h3>
+
+            <div class="code-box">
+                <pre><code>{
+  "userId": "123",
+
+  "items": [
+    {
+      "productId": "456",
+      "quantity": 2
+    }
+  ],
+
+  "total": 240000,
+  "status": "pending"
+}</code></pre>
+            </div>
+
+        </section>
+
+
+        <!-- More Real World -->
+        <section class="section">
+
+            <div class="section-title">
+                <span>09</span>
+                <h2>Other Real-World Examples</h2>
+            </div>
+
+            <div class="real-world-grid">
+
+                <div>
+                    <span>💬</span>
+                    <h3>Chat App</h3>
+                    <p>
+                        Users, conversations and messages.
+                    </p>
+                </div>
+
+                <div>
+                    <span>🎓</span>
+                    <h3>Learning Platform</h3>
+                    <p>
+                        Courses, lessons, quizzes and progress.
+                    </p>
+                </div>
+
+                <div>
+                    <span>📱</span>
+                    <h3>Social Platform</h3>
+                    <p>
+                        Posts, comments, likes and followers.
+                    </p>
+                </div>
+
+                <div>
+                    <span>📰</span>
+                    <h3>Content Platform</h3>
+                    <p>
+                        Articles, tags, authors and categories.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Advantages -->
+        <section class="section" id="advantages">
+
+            <div class="section-title">
+                <span>10</span>
+                <h2>Advantages</h2>
+            </div>
+
+            <ul class="feature-list">
+                <li>✓ Flexible document structure</li>
+                <li>✓ JSON-like data model</li>
+                <li>✓ Good JavaScript ecosystem integration</li>
+                <li>✓ Supports horizontal scaling</li>
+                <li>✓ Useful for document-oriented applications</li>
+                <li>✓ Good developer experience</li>
+            </ul>
+
+        </section>
+
+
+        <!-- Limitations -->
+        <section class="section" id="limitations">
+
+            <div class="section-title">
+                <span>11</span>
+                <h2>Limitations / Considerations</h2>
+            </div>
+
+            <div class="warning">
+
+                <h3>⚠️ MongoDB har project ke liye best nahi hai.</h3>
+
+                <p>
+                    Agar application mein highly relational data aur complex
+                    relationships hain, relational SQL database better fit ho
+                    sakta hai.
+                </p>
+
+                <p>
+                    Database select karte waqt application ki requirements,
+                    data relationships, transactions aur scalability ko consider
+                    karna chahiye.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Summary -->
+        <section class="section summary" id="summary">
+
+            <div class="section-title">
+                <span>12</span>
+                <h2>Summary</h2>
+            </div>
+
+            <div class="summary-box">
+
+                <h3>MongoDB = NoSQL + Documents</h3>
+
+                <p>
+                    MongoDB ek document-oriented NoSQL database hai jo
+                    data ko BSON documents mein store karta hai.
+                </p>
+
+                <div class="summary-flow">
+                    <span>Database</span>
+                    <b>→</b>
+                    <span>Collection</span>
+                    <b>→</b>
+                    <span>Document</span>
+                    <b>→</b>
+                    <span>Fields</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <div class="footer-logo">
+                🍃 MongoDB Docs
+            </div>
+
+            <p>
+                Beginner-friendly MongoDB documentation
+                built with HTML & CSS.
+            </p>
+
+            <p class="copyright">
+                © 2026 MongoDB Learning Guide
+            </p>
+
+        </footer>
+
+    </main>
+
+</body>
+
+</html>
+```

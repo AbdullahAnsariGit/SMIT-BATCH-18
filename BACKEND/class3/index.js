@@ -9,9 +9,11 @@ let products = []
 
 // get 
 app.get("/", (req, res) => {
+    const query = req.query
+    console.log(query)
     res.json({
         data: products,
-        message: "data feteched succesfully",
+        message: "data feteched successfully",
         success: true
     })
 })
@@ -59,7 +61,7 @@ app.put("/update-product/:id", (req, res) => {
 
 
 app.delete("/delete-product/:id", (req, res) => {
-    let { id } = req.params
+    let { id } = req.query
 
     let data = products.filter((item) => item.id != id)
     products = data
@@ -69,7 +71,6 @@ app.delete("/delete-product/:id", (req, res) => {
         data: products
     })
 })
-
 
 
 
