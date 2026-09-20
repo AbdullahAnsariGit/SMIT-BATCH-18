@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multer Image Upload</title>
+</head>
+
+<body>
+    <h1>Upload Image</h1>
+
+    <label for="file">Select Image:</label>
+
+    <input type="file" id="file" name="file" accept="image/*" required>
+
+    <br><br>
+
+    <button onclick="submitFile()">
+        Upload Image
+    </button>
+
+
+    <script>
+        async function submitFile() {
+
+            const fileInput = document.getElementById("file");
+
+            // Get selected file
+            const file = fileInput.files[0];
+
+            console.log(file)
+            if (!file) {
+                message.textContent = "Please select a file.";
+                return;
+            }
+
+            // Create multipart/form-data
+            const formData = new FormData();
+
+            // "file" must match upload.single("file") in Multer
+            formData.append("file", file);
+            console.log([...formData]);
+            // try {
+            //     const response = await fetch(
+            //         "http://localhost:4000/image-upload",
+            //         {
+            //             method: "POST",
+            //             body: formData
+            //         }
+            //     );
+
+            //     const data = await response.json();
+
+            //     // if (!response.ok) {
+            //     //     throw new Error(data.message || "Upload failed");
+            //     // }
+
+            //     // console.log("Server response:", data);
+            //     alert("Success")
+
+            // } catch (error) {
+            //     console.error("Upload error:", error)
+
+            // }
+        }
+    </script>
+
+</body>
+
+</html>

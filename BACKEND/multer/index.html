@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multer with Express.js — Documentation</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #ffffff;
+            --text: #172033;
+            --muted: #5d6678;
+            --border: #e2e7ef;
+            --code: #111827;
+            --accent: #2563eb;
+            --accent-soft: #eff6ff;
+            --success: #047857;
+            --warning: #b45309;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.65;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        aside {
+            width: 270px;
+            position: fixed;
+            inset: 0 auto 0 0;
+            overflow-y: auto;
+            background: #111827;
+            color: #dbe4f0;
+            padding: 28px 20px;
+        }
+
+        aside h2 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        aside p {
+            color: #9ca9bb;
+            font-size: 13px;
+        }
+
+        aside a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 7px 9px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        aside a:hover {
+            background: #1f2937;
+            color: #fff;
+        }
+
+        main {
+            width: min(1000px, calc(100% - 320px));
+            margin-left: 300px;
+            padding: 50px 30px 80px;
+        }
+
+        section,
+        header {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 14px rgba(15, 23, 42, .035);
+        }
+
+        header {
+            padding: 38px;
+        }
+
+        h1 {
+            font-size: 38px;
+            line-height: 1.15;
+            margin: 0 0 12px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 25px;
+        }
+
+        h3 {
+            margin-top: 26px;
+            font-size: 19px;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            background: #eef2f7;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: .9em;
+        }
+
+        pre {
+            background: var(--code);
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        .note,
+        .warning,
+        .success {
+            padding: 14px 16px;
+            border-left: 4px solid;
+            border-radius: 7px;
+            margin: 18px 0;
+        }
+
+        .note {
+            background: #f0f7ff;
+            border-color: var(--accent);
+        }
+
+        .warning {
+            background: #fff8ed;
+            border-color: #f59e0b;
+        }
+
+        .success {
+            background: #ecfdf5;
+            border-color: var(--success);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        th {
+            background: #f8fafc;
+        }
+
+        ul,
+        ol {
+            padding-left: 24px;
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            aside {
+                display: none;
+            }
+
+            main {
+                width: 100%;
+                margin: 0;
+                padding: 20px 14px 50px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            section,
+            header {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <aside>
+            <h2>Multer + Express</h2>
+            <p>Practical file-upload documentation for Node.js applications.</p>
+            <a href="#overview">Overview</a>
+            <a href="#setup">Installation</a>
+            <a href="#basic">Basic Upload</a>
+            <a href="#single">Single File</a>
+            <a href="#multiple">Multiple Files</a>
+            <a href="#fields">Multiple Fields</a>
+            <a href="#limits">Limits</a>
+            <a href="#filter">File Filter</a>
+            <a href="#storage">Storage</a>
+            <a href="#memory">Memory Storage</a>
+            <a href="#errors">Error Handling</a>
+            <a href="#frontend">HTML Form</a>
+            <a href="#security">Security</a>
+            <a href="#example">Complete Example</a>
+            <a href="#reference">Quick Reference</a>
+        </aside>
+
+        <main>
+            <header>
+                <div><span class="tag">Express.js</span><span class="tag">Node.js</span><span class="tag">Multer</span>
+                </div>
+                <h1>File Uploads with Multer in Express.js</h1>
+                <p class="lead">
+                    A practical guide to receiving multipart/form-data files in an Express application,
+                    validating uploads, storing files, and handling upload errors safely.
+                </p>
+            </header>
+
+            <section id="overview">
+                <h2>1. Overview</h2>
+                <p>
+                    <strong>Multer</strong> is middleware for handling <code>multipart/form-data</code>,
+                    the encoding normally used when an HTML form uploads files.
+                </p>
+                <p>It parses the incoming request and exposes uploaded files through:</p>
+                <ul>
+                    <li><code>req.file</code> — when one file is uploaded.</li>
+                    <li><code>req.files</code> — when multiple files are uploaded.</li>
+                    <li><code>req.body</code> — for accompanying text fields.</li>
+                </ul>
+                <div class="note">
+                    <strong>Important:</strong> Multer should normally be attached only to routes that actually
+                    accept uploads. Avoid installing it globally as <code>app.use(upload.any())</code>.
+                </div>
+            </section>
+
+            <section id="setup">
+                <h2>2. Installation</h2>
+                <pre><code>npm install multer express</code></pre>
+                <p>Typical project structure:</p>
+                <pre><code>project/
+├── uploads/
+├── src/
+│   ├── routes/
+│   ├── controllers/
+│   ├── middleware/
+│   └── app.js
+└── package.json</code></pre>
+            </section>
+
+            <section id="basic">
+                <h2>3. Basic Setup</h2>
+                <pre><code>const express = require("express");
+const multer = require("multer");
+
+const app = express();
+
+const upload = multer({
+  dest: "uploads/"
+});
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file);
+  console.log(req.body);
+
+  res.json({
+    message: "File uploaded successfully",
+    file: req.file
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});</code></pre>
+                <p>The field name in the client must match <code>single("file")</code>.</p>
+            </section>
+
+            <section id="single">
+                <h2>4. Upload a Single File</h2>
+                <pre><code>app.post(
+  "/profile",
+  upload.single("avatar"),
+  (req, res) => {
+    console.log(req.file);
+
+    res.json({
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      mimeType: req.file.mimetype,
+      size: req.file.size
+    });
+  }
+);</code></pre>
+
+                <p>Important <code>req.file</code> properties:</p>
+                <table>
+                    <tr>
+                        <th>Property</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>fieldname</code></td>
+                        <td>Name of the multipart form field.</td>
+                    </tr>
+                    <tr>
+                        <td><code>originalname</code></td>
+                        <td>Original filename supplied by the client.</td>
+                    </tr>
+                    <tr>
+                        <td><code>encoding</code></td>
+                        <td>Transfer encoding.</td>
+                    </tr>
+                    <tr>
+                        <td><code>mimetype</code></td>
+                        <td>MIME type reported by the client.</td>
+                    </tr>
+                    <tr>
+                        <td><code>size</code></td>
+                        <td>File size in bytes.</td>
+                    </tr>
+                    <tr>
+                        <td><code>destination</code></td>
+                        <td>Destination directory when disk storage is used.</td>
+                    </tr>
+                    <tr>
+                        <td><code>filename</code></td>
+                        <td>Stored filename when disk storage is used.</td>
+                    </tr>
+                    <tr>
+                        <td><code>path</code></td>
+                        <td>Full stored path when disk storage is used.</td>
+                    </tr>
+                    <tr>
+                        <td><code>buffer</code></td>
+                        <td>File contents when memory storage is used.</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="multiple">
+                <h2>5. Upload Multiple Files</h2>
+                <h3>Using <code>array()</code></h3>
+                <pre><code>app.post(
+  "/gallery",
+  upload.array("images", 5),
+  (req, res) => {
+    console.log(req.files);
+
+    res.json({
+      count: req.files.length,
+      files: req.files
+    });
+  }
+);</code></pre>
+                <p>Here, <code>images</code> is the field name and at most 5 files are accepted.</p>
+
+                <h3>Using <code>fields()</code></h3>
+                <pre><code>const uploadFields = upload.fields([
+  { name: "avatar", maxCount: 1 },
+  { name: "documents", maxCount: 3 }
+]);
+
+app.post("/account", uploadFields, (req, res) => {
+  console.log(req.files.avatar);
+  console.log(req.files.documents);
+
+  res.json({ message: "Uploaded" });
+});</code></pre>
+            </section>
+
+            <section id="fields">
+                <h2>6. Text Fields + Files</h2>
+                <p>Multer also parses regular multipart text fields.</p>
+                <pre><code>app.post(
+  "/product",
+  upload.single("image"),
+  (req, res) => {
+    const { name, price, description } = req.body;
+
+    console.log(name);
+    console.log(price);
+    console.log(description);
+    console.log(req.file);
+
+    res.json({ message: "Product created" });
+  }
+);</code></pre>
+            </section>
+
+            <section id="limits">
+                <h2>7. Upload Limits</h2>
+                <p>Use limits to prevent unnecessarily large uploads.</p>
+                <pre><code>const upload = multer({
+  dest: "uploads/",
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5 MB
+    files: 5,
+    fields: 20
+  }
+});</code></pre>
+                <div class="warning">
+                    <strong>Why limits matter:</strong> Upload endpoints can consume disk, memory, bandwidth,
+                    and processing resources. Set limits appropriate to your application.
+                </div>
+            </section>
+
+            <section id="filter">
+                <h2>8. File Type Validation</h2>
+                <p>
+                    <code>fileFilter</code> can reject files before they are accepted by Multer.
+                    Do not blindly trust the browser-provided MIME type for high-security applications;
+                    inspect file signatures/content when necessary.
+                </p>
+                <pre><code>const allowedTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/webp"
+];
+
+const upload = multer({
+  dest: "uploads/",
+  fileFilter: (req, file, cb) => {
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only JPEG, PNG and WebP images are allowed"));
+    }
+  }
+});</code></pre>
+            </section>
+
+            <section id="storage">
+                <h2>9. Disk Storage</h2>
+                <p>Disk storage gives you control over the destination and generated filename.</p>
+                <pre><code>const path = require("path");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+
+  filename: (req, file, cb) => {
+    const extension = path.extname(file.originalname);
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`;
+
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({
+  storage
+});</code></pre>
+                <div class="note">
+                    Prefer generated filenames instead of directly using <code>file.originalname</code>.
+                    User-controlled filenames can cause collisions or unsafe path handling if used incorrectly.
+                </div>
+            </section>
+
+            <section id="memory">
+                <h2>10. Memory Storage</h2>
+                <p>
+                    With memory storage, Multer places the complete file in a <code>Buffer</code>.
+                    This can be useful when immediately sending the file to object storage or another service.
+                </p>
+                <pre><code>const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 2 * 1024 * 1024
+  }
+});
+
+app.post("/upload", upload.single("file"), async (req, res) => {
+  const fileBuffer = req.file.buffer;
+
+  // Send fileBuffer to your storage service here.
+
+  res.json({ message: "File received" });
+});</code></pre>
+                <div class="warning">
+                    <strong>Memory warning:</strong> Never use memory storage without sensible file-size and
+                    request limits. Large or concurrent uploads can consume significant RAM.
+                </div>
+            </section>
+
+            <section id="errors">
+                <h2>11. Error Handling</h2>
+                <p>Multer exposes specific errors through <code>MulterError</code>.</p>
+                <pre><code>const multer = require("multer");
+
+app.post(
+  "/upload",
+  (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({
+          message: "Upload failed",
+          code: err.code
+        });
+      }
+
+      if (err) {
+        return res.status(400).json({
+          message: err.message
+        });
+      }
+
+      next();
+    });
+  },
+  (req, res) => {
+    res.json({
+      message: "Upload successful",
+      file: req.file
+    });
+  }
+);</code></pre>
+
+                <h3>Common Multer errors</h3>
+                <table>
+                    <tr>
+                        <th>Error code</th>
+                        <th>Typical cause</th>
+                    </tr>
+                    <tr>
+                        <td><code>LIMIT_FILE_SIZE</code></td>
+                        <td>File exceeds the configured size.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LIMIT_FILE_COUNT</code></td>
+                        <td>Too many files were submitted.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LIMIT_UNEXPECTED_FILE</code></td>
+                        <td>Unexpected file field or count.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LIMIT_FIELD_COUNT</code></td>
+                        <td>Too many non-file fields.</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="frontend">
+                <h2>12. HTML Form</h2>
+                <p>For file uploads, the form must use <code>enctype="multipart/form-data"</code>.</p>
+                <pre><code>&lt;form
+  action="http://localhost:3000/upload"
+  method="POST"
+  enctype="multipart/form-data"
+&gt;
+  &lt;label&gt;Choose file:&lt;/label&gt;
+
+  &lt;input
+    type="file"
+    name="file"
+    accept="image/*"
+  /&gt;
+
+  &lt;input
+    type="text"
+    name="title"
+    placeholder="File title"
+  /&gt;
+
+  &lt;button type="submit"&gt;Upload&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+                <div class="success">
+                    <strong>Field names must match.</strong>
+                    If Express uses <code>upload.single("file")</code>, the HTML input must use
+                    <code>name="file"</code>.
+                </div>
+            </section>
+
+            <section id="security">
+                <h2>13. Security Best Practices</h2>
+                <ol>
+                    <li>Set <code>fileSize</code> and file-count limits.</li>
+                    <li>Accept only the file types your endpoint actually needs.</li>
+                    <li>Do not trust <code>originalname</code> for filesystem paths.</li>
+                    <li>Generate server-side filenames.</li>
+                    <li>Consider validating file signatures/content, not only MIME types or extensions.</li>
+                    <li>Store uploaded files outside publicly served directories when appropriate.</li>
+                    <li>Use authentication/authorization for private upload endpoints.</li>
+                    <li>Consider malware scanning for user-supplied documents where the threat model requires it.</li>
+                    <li>Use object storage for production-scale media instead of relying solely on local disk.</li>
+                    <li>Use memory storage only when file sizes and concurrency are tightly controlled.</li>
+                </ol>
+            </section>
+
+            <section id="example">
+                <h2>14. Complete Production-Style Example</h2>
+                <pre><code>const express = require("express");
+const multer = require("multer");
+const path = require("path");
+
+const app = express();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    const filename =
+      `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+
+    cb(null, filename);
+  }
+});
+
+const upload = multer({
+  storage,
+
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+    files: 1
+  },
+
+  fileFilter: (req, file, cb) => {
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+    if (!allowed.includes(file.mimetype)) {
+      return cb(new Error("Unsupported file type"));
+    }
+
+    cb(null, true);
+  }
+});
+
+app.post("/api/profile/avatar", (req, res) => {
+  upload.single("avatar")(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({
+        success: false,
+        message: "Upload error",
+        code: err.code
+      });
+    }
+
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Avatar is required"
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Avatar uploaded successfully",
+      file: {
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+        path: req.file.path
+      }
+    });
+  });
+});
+
+app.listen(3000, () => {
+  console.log("API running on http://localhost:3000");
+});</code></pre>
+            </section>
+
+            <section id="reference">
+                <h2>15. Quick Reference</h2>
+                <table>
+                    <tr>
+                        <th>Multer API</th>
+                        <th>Use case</th>
+                    </tr>
+                    <tr>
+                        <td><code>upload.single("file")</code></td>
+                        <td>One file.</td>
+                    </tr>
+                    <tr>
+                        <td><code>upload.array("files", 5)</code></td>
+                        <td>Multiple files using one field.</td>
+                    </tr>
+                    <tr>
+                        <td><code>upload.fields([...])</code></td>
+                        <td>Multiple file fields with different names.</td>
+                    </tr>
+                    <tr>
+                        <td><code>upload.none()</code></td>
+                        <td>Multipart form with text fields only.</td>
+                    </tr>
+                    <tr>
+                        <td><code>upload.any()</code></td>
+                        <td>Accept files from any field. Use with caution.</td>
+                    </tr>
+                    <tr>
+                        <td><code>multer.diskStorage()</code></td>
+                        <td>Store files on disk.</td>
+                    </tr>
+                    <tr>
+                        <td><code>multer.memoryStorage()</code></td>
+                        <td>Keep files in memory as buffers.</td>
+                    </tr>
+                    <tr>
+                        <td><code>fileFilter</code></td>
+                        <td>Accept/reject files based on application rules.</td>
+                    </tr>
+                    <tr>
+                        <td><code>limits</code></td>
+                        <td>Control file size, file count, fields, etc.</td>
+                    </tr>
+                </table>
+
+                <h3>Request flow</h3>
+                <pre><code>HTML Form
+   │
+   │ multipart/form-data
+   ▼
+Express Route
+   │
+   ▼
+Multer Middleware
+   │
+   ├── req.body  → text fields
+   │
+   ├── req.file  → single file
+   │
+   └── req.files → multiple files
+          │
+          ▼
+Controller / Service
+          │
+          ▼
+Database / Local Disk / Object Storage</code></pre>
+
+                <p class="small">
+                    This document is intended as a practical Express.js/Multer reference. Always review
+                    your application's authentication, validation, storage, and threat model before deploying
+                    an upload endpoint to production.
+                </p>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
