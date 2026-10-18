@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Socket.IO with Express &amp; Vite — Complete Guide</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a2332;
+      --surface-2: #243044;
+      --border: #2d3a4f;
+      --text: #e7ecf3;
+      --text-muted: #9aa8bc;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.15);
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.12);
+      --orange: #f59e0b;
+      --orange-soft: rgba(245, 158, 11, 0.12);
+      --purple: #a855f7;
+      --purple-soft: rgba(168, 85, 247, 0.12);
+      --code-bg: #0d1117;
+      --radius: 12px;
+      --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+      --mono: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .hero {
+      background: linear-gradient(135deg, #0f1419 0%, #1a2744 50%, #0f1419 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59, 130, 246, 0.18), transparent),
+        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(168, 85, 247, 0.1), transparent);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 18px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      color: var(--text);
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-icon.blue { background: var(--accent-soft); }
+    .card-icon.green { background: var(--green-soft); }
+    .card-icon.orange { background: var(--orange-soft); }
+    .card-icon.purple { background: var(--purple-soft); }
+
+    .card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Why list */
+    .why-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .why-list li {
+      display: flex;
+      gap: 0.85rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .why-list li:last-child {
+      border-bottom: none;
+    }
+
+    .why-list .num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .why-list strong {
+      color: var(--text);
+    }
+
+    /* Use cases */
+    .use-case {
+      display: flex;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .use-case-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .use-case h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .use-case p {
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: #c9d1d9;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--surface-2);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: #93c5fd;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .code-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Steps */
+    .step {
+      display: flex;
+      gap: 1.15rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+    }
+
+    .step-body h3 {
+      margin-top: 0.15rem;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Benefits table-like */
+    .benefit-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    @media (max-width: 560px) {
+      .benefit-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .benefit {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .benefit-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .benefit strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      color: var(--text);
+    }
+
+    .benefit span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Architecture diagram (simple) */
+    .arch {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .arch-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      min-width: 110px;
+    }
+
+    .arch-box.client { border-color: rgba(59, 130, 246, 0.5); color: #93c5fd; }
+    .arch-box.server { border-color: rgba(34, 197, 94, 0.5); color: #86efac; }
+    .arch-box.socket { border-color: rgba(168, 85, 247, 0.5); color: #d8b4fe; }
+
+    .arch-arrow {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .toc h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 0 0 0.75rem;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+    }
+
+    .toc li {
+      counter-increment: toc;
+      margin-bottom: 0.4rem;
+    }
+
+    .toc a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 0.5rem;
+      transition: color 0.15s;
+    }
+
+    .toc a:hover {
+      color: var(--accent);
+    }
+
+    .toc a::before {
+      content: counter(toc) ".";
+      color: var(--accent);
+      font-weight: 600;
+      min-width: 1.2em;
+    }
+
+    /* Highlight box */
+    .note {
+      background: var(--accent-soft);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 0.9rem 1.15rem;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .note strong {
+      color: #93c5fd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-badge">Real-time Web Guide</div>
+    <h1>Socket.IO with <span>Express &amp; Vite</span></h1>
+    <p>A practical guide to building real-time applications — why, when, and how to implement bidirectional communication.</p>
+  </header>
+
+  <main class="container">
+
+    <!-- TOC -->
+    <nav class="toc">
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#why">Why We Use Socket.IO</a></li>
+        <li><a href="#usecases">Common Use Cases</a></li>
+        <li><a href="#architecture">Architecture Overview</a></li>
+        <li><a href="#implement">How to Implement</a></li>
+        <li><a href="#benefits">Benefits</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1. Why -->
+    <section id="why">
+      <div class="section-label">01</div>
+      <h2>Why We Use Socket.IO</h2>
+      <p>
+        Traditional HTTP is request–response only: the client asks, the server answers, then the connection closes.
+        For features that need <strong style="color:var(--text)">instant updates</strong> (chat, live scores, collaborative editing),
+        constantly polling the server is inefficient and slow.
+      </p>
+      <p>
+        <strong style="color:var(--text)">Socket.IO</strong> builds on WebSockets (with automatic fallbacks) to give you
+        a persistent, bidirectional channel between browser and server. Once connected, either side can push data at any time.
+      </p>
+
+      <ul class="why-list">
+        <li>
+          <span class="num">1</span>
+          <div>
+            <strong>Low latency</strong> — Events travel in milliseconds instead of waiting for the next poll cycle.
+          </div>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <div>
+            <strong>Bidirectional</strong> — Server can push to clients without being asked (true push, not pull).
+          </div>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <div>
+            <strong>Auto-reconnect &amp; fallbacks</strong> — Handles network drops and older browsers (long-polling) for you.
+          </div>
+        </li>
+        <li>
+          <span class="num">4</span>
+          <div>
+            <strong>Rooms &amp; namespaces</strong> — Built-in ways to group clients (e.g. chat rooms, game lobbies).
+          </div>
+        </li>
+        <li>
+          <span class="num">5</span>
+          <div>
+            <strong>Works with Express</strong> — Shares the same HTTP server; easy to mix REST APIs and real-time events.
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 2. Use cases -->
+    <section id="usecases">
+      <div class="section-label">02</div>
+      <h2>Common Use Cases</h2>
+      <p>Socket.IO shines whenever the UI must stay in sync with live data.</p>
+
+      <div class="use-case">
+        <div class="use-case-num">1</div>
+        <div>
+          <h4>Chat &amp; messaging apps</h4>
+          <p>Instant message delivery, typing indicators, online status, and group rooms.</p>
+        </div>
+      </div>
+      <div class="use-case">
+        <div class="use-case-num">2</div>
+        <div>
+          <h4>Live dashboards &amp; monitoring</h4>
+          <p>Stock tickers, server metrics, order status, analytics that update without refresh.</p>
+        </div>
+      </div>
+      <div class="use-case">
+        <div class="use-case-num">3</div>
+        <div>
+          <h4>Collaborative tools</h4>
+          <p>Shared whiteboards, multi-user document editing, presence indicators.</p>
+        </div>
+      </div>
+      <div class="use-case">
+        <div class="use-case-num">4</div>
+        <div>
+          <h4>Multiplayer games</h4>
+          <p>Real-time position sync, matchmaking lobbies, turn-based or action games.</p>
+        </div>
+      </div>
+      <div class="use-case">
+        <div class="use-case-num">5</div>
+        <div>
+          <h4>Notifications &amp; alerts</h4>
+          <p>Push alerts for new orders, comments, system events without polling.</p>
+        </div>
+      </div>
+      <div class="use-case">
+        <div class="use-case-num">6</div>
+        <div>
+          <h4>Live streaming interactions</h4>
+          <p>Live comments, polls, Q&amp;A during streams or webinars.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Architecture -->
+    <section id="architecture">
+      <div class="section-label">03</div>
+      <h2>Architecture Overview</h2>
+      <p>
+        With <strong style="color:var(--text)">Vite</strong> (frontend) and <strong style="color:var(--text)">Express</strong> (backend),
+        you typically run two processes in development and share one HTTP server that hosts both the API and Socket.IO.
+      </p>
+
+      <div class="arch">
+        <div class="arch-box client">Vite Client<br/><small style="font-weight:400;opacity:0.8">React / Vue / etc.</small></div>
+        <span class="arch-arrow">↔</span>
+        <div class="arch-box socket">Socket.IO<br/><small style="font-weight:400;opacity:0.8">WebSocket / polling</small></div>
+        <span class="arch-arrow">↔</span>
+        <div class="arch-box server">Express<br/><small style="font-weight:400;opacity:0.8">HTTP + Socket.IO</small></div>
+      </div>
+
+      <div class="note">
+        <strong>Tip:</strong> In production you can serve the Vite build from Express, or put a reverse proxy (Nginx) in front of both.
+        Socket.IO works either way as long as the client can reach the Socket.IO endpoint.
+      </div>
+    </section>
+
+    <!-- 4. Implementation -->
+    <section id="implement">
+      <div class="section-label">04</div>
+      <h2>How to Implement</h2>
+      <p>Below is a minimal but complete setup: Express + Socket.IO on the server, Vite + official client on the frontend.</p>
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Install dependencies</h3>
+          <p>Server (in your backend folder):</p>
+          <div class="code-label">Terminal — server</div>
+          <pre><code>npm init -y
+npm install express socket.io cors
+npm install -D nodemon</code></pre>
+          <p>Client (Vite project):</p>
+          <div class="code-label">Terminal — client</div>
+          <pre><code>npm create vite@latest client -- --template react
+cd client
+npm install
+npm install socket.io-client</code></pre>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Server setup (Express + Socket.IO)</h3>
+          <div class="code-label">server/index.js</div>
+          <pre><code>import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const httpServer = createServer(app);
+
+// Attach Socket.IO to the same HTTP server
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173", // Vite default
+    methods: ["GET", "POST"],
+  },
+});
+
+// REST route still works
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
+// Socket.IO events
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
+
+  // Join a room (optional)
+  socket.on("join-room", (roomId) => {
+    socket.join(roomId);
+    socket.to(roomId).emit("user-joined", socket.id);
+  });
+
+  // Receive a message and broadcast
+  socket.on("chat-message", ({ roomId, message, user }) => {
+    io.to(roomId).emit("chat-message", {
+      user,
+      message,
+      time: new Date().toISOString(),
+    });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+httpServer.listen(PORT, () => {
+  console.log(`Server + Socket.IO on http://localhost:${PORT}`);
+});</code></pre>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Client setup (Vite + socket.io-client)</h3>
+          <div class="code-label">client/src/socket.js</div>
+          <pre><code>import { io } from "socket.io-client";
+
+// Point to your Express server
+export const socket = io("http://localhost:3000", {
+  autoConnect: true,
+  // Optional: reconnection options
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+});</code></pre>
+
+          <div class="code-label">client/src/App.jsx (example chat)</div>
+          <pre><code>import { useEffect, useState } from "react";
+import { socket } from "./socket";
+
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const roomId = "lobby";
+
+  useEffect(() => {
+    socket.emit("join-room", roomId);
+
+    socket.on("chat-message", (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    });
+
+    socket.on("user-joined", (id) => {
+      console.log("User joined:", id);
+    });
+
+    return () => {
+      socket.off("chat-message");
+      socket.off("user-joined");
+    };
+  }, []);
+
+  const send = () => {
+    if (!input.trim()) return;
+    socket.emit("chat-message", {
+      roomId,
+      message: input,
+      user: "You",
+    });
+    setInput("");
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Live Chat&lt;/h1&gt;
+      &lt;ul&gt;
+        {messages.map((m, i) =&gt; (
+          &lt;li key={i}&gt;
+            &lt;strong&gt;{m.user}&lt;/strong&gt;: {m.message}
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;input
+        value={input}
+        onChange={(e) =&gt; setInput(e.target.value)}
+        onKeyDown={(e) =&gt; e.key === "Enter" &amp;&amp; send()}
+      /&gt;
+      &lt;button onClick={send}&gt;Send&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Run both servers</h3>
+          <div class="code-label">Terminal</div>
+          <pre><code># Terminal 1 — backend
+node server/index.js
+# or: npx nodemon server/index.js
+
+# Terminal 2 — frontend
+cd client
+npm run dev</code></pre>
+          <p>
+            Open <code>http://localhost:5173</code>. The Vite app connects to Socket.IO on port 3000.
+            Messages are broadcast to everyone in the same room in real time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Useful patterns</h3>
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-icon blue">📡</div>
+              <h4>Emit to all</h4>
+              <p><code>io.emit("event", data)</code> — every connected client.</p>
+            </div>
+            <div class="card">
+              <div class="card-icon green">🏠</div>
+              <h4>Emit to room</h4>
+              <p><code>io.to(roomId).emit(...)</code> — only clients in that room.</p>
+            </div>
+            <div class="card">
+              <div class="card-icon orange">👤</div>
+              <h4>Emit to one</h4>
+              <p><code>socket.emit(...)</code> or <code>io.to(socketId).emit(...)</code>.</p>
+            </div>
+            <div class="card">
+              <div class="card-icon purple">↩️</div>
+              <h4>Ack callbacks</h4>
+              <p>Client can pass a callback; server calls it when done (request/response over socket).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Benefits -->
+    <section id="benefits">
+      <div class="section-label">05</div>
+      <h2>Benefits</h2>
+      <p>Why teams choose Socket.IO over raw WebSockets or pure HTTP polling:</p>
+
+      <div class="benefit-row">
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Reliability out of the box</strong>
+            <span>Automatic reconnection, heartbeat, and fallback to HTTP long-polling when WebSockets are blocked.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Simple event API</strong>
+            <span>Familiar <code>emit</code> / <code>on</code> model. Easy to reason about and debug.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Rooms &amp; namespaces</strong>
+            <span>First-class support for grouping clients without writing your own pub/sub layer.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Works with Express</strong>
+            <span>Same process, same port, same auth middleware. Mix REST and real-time cleanly.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Great DX with Vite</strong>
+            <span>Hot Module Replacement still works; only the socket connection stays open.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Scalable</strong>
+            <span>Adapters (Redis, etc.) let you scale across multiple Node processes or servers.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Binary support</strong>
+            <span>Send ArrayBuffers, Blobs, and files efficiently over the same connection.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong>Active ecosystem</strong>
+            <span>Official clients for browsers, Node, and many other platforms; large community.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>When not to use it:</strong> If you only need one-way server → client updates and can use Server-Sent Events (SSE),
+        or if you need ultra-low-level control, raw WebSockets may be enough. For most full-duplex apps, Socket.IO is the pragmatic choice.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Socket.IO + Express + Vite · Real-time guide · Built for developers
+  </footer>
+
+</body>
+</html>

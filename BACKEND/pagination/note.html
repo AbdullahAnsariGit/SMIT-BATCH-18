@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express.js Filtering & Pagination Guide</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      background: #f3f6fb;
+      color: #243047;
+    }
+
+    header {
+      background: #172554;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #dbeafe;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background: white;
+      padding: 25px;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #17255410;
+    }
+
+    h2 {
+      color: #1d4ed8;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #dbeafe;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      color: #172554;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    ul,
+    ol {
+      padding-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code {
+      background: #eaf0fa;
+      padding: 2px 5px;
+      border-radius: 4px;
+      overflow-wrap: anywhere;
+    }
+
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      overflow-wrap: normal;
+    }
+
+    .highlight {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .example {
+      border: 1px solid #dbeafe;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 12px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      section {
+        padding: 18px;
+      }
+
+      pre {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Express.js Filtering & Pagination</h1>
+    <p>A beginner-friendly guide with examples and real-world use cases</p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>1. What Is Filtering?</h2>
+
+      <p>
+        Filtering means selecting only the data that matches
+        specific conditions. In Express.js, filters are commonly
+        received through URL query parameters.
+      </p>
+
+      <div class="highlight">
+        <strong>Example:</strong>
+        A store has 1,000 products. A user wants to see only
+        electronics costing less than $500.
+      </div>
+
+      <h3>Why do we use filtering?</h3>
+      <ul>
+        <li>Find relevant records quickly.</li>
+        <li>Search products, users, or employees.</li>
+        <li>Filter by category, price, name, or status.</li>
+        <li>Improve the user experience.</li>
+      </ul>
+
+      <h3>Example URL</h3>
+      <pre><code>GET /api/products?category=electronics</code></pre>
+
+      <p>
+        Express reads the query parameter using
+        <code>req.query.category</code>.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. What Is Pagination?</h2>
+
+      <p>
+        Pagination divides a large collection of records into
+        smaller pages. Instead of returning 1,000 products at
+        once, the API can return 10 products per page.
+      </p>
+
+      <div class="highlight">
+        <strong>Example:</strong>
+        Page 1 contains products 1–10, page 2 contains products
+        11–20, and page 3 contains products 21–30.
+      </div>
+
+      <h3>Why do we use pagination?</h3>
+      <ul>
+        <li>Reduce the response size.</li>
+        <li>Avoid sending unnecessary data.</li>
+        <li>Make large lists easier to navigate.</li>
+        <li>Reduce memory and network usage when implemented
+          with database-level pagination.</li>
+      </ul>
+
+      <h3>Example URL</h3>
+      <pre><code>GET /api/products?page=2&amp;limit=10</code></pre>
+
+      <p>
+        Here, <code>page=2</code> requests the second page,
+        and <code>limit=10</code> requests up to 10 records.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Real-World Use Cases</h2>
+
+      <div class="example">
+        <span class="tag">E-commerce</span>
+        <h3>Product Catalog</h3>
+        Filter products by category and price, then show
+        10 products per page.
+      </div>
+
+      <div class="example">
+        <span class="tag">Admin Dashboard</span>
+        <h3>User Management</h3>
+        Filter users by role or account status and paginate
+        the results.
+      </div>
+
+      <div class="example">
+        <span class="tag">Job Portal</span>
+        <h3>Job Search</h3>
+        Filter jobs by location, salary, and job type.
+      </div>
+
+      <div class="example">
+        <span class="tag">Blog Website</span>
+        <h3>Articles</h3>
+        Filter articles by category and show a few posts
+        on each page.
+      </div>
+    </section>
+
+    <section>
+      <h2>4. How Filtering and Pagination Work Together</h2>
+
+      <pre><code>GET /api/products?category=electronics&amp;maxPrice=500&amp;page=2&amp;limit=10</code></pre>
+
+      <ol>
+        <li>Read the query parameters.</li>
+        <li>Filter products by category.</li>
+        <li>Keep products priced at $500 or less.</li>
+        <li>Count the matching records.</li>
+        <li>Return the requested page of results.</li>
+      </ol>
+
+      <div class="highlight">
+        <strong>Important:</strong>
+        Apply filters before pagination. Otherwise, a page may
+        contain fewer matching records than expected.
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Create an Express.js API</h2>
+
+      <h3>Step 1: Install Express</h3>
+      <pre><code>npm init -y
+npm install express</code></pre>
+
+      <h3>Step 2: Create server.js</h3>
+
+      <pre><code>const express = require("express");
+const app = express();
+
+const products = [
+  { id: 1, name: "Laptop", category: "electronics", price: 450 },
+  { id: 2, name: "Phone", category: "electronics", price: 300 },
+  { id: 3, name: "Desk", category: "furniture", price: 200 },
+  { id: 4, name: "Headphones", category: "electronics", price: 80 },
+  { id: 5, name: "Chair", category: "furniture", price: 120 }
+];
+
+app.get("/api/products", (req, res) =&gt; {
+  const { category, maxPrice } = req.query;
+
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const limit = Math.min(
+    100,
+    Math.max(1, Number(req.query.limit) || 10)
+  );
+
+  // Validate supplied pagination values.
+  if (
+    (req.query.page !== undefined &amp;&amp;
+      (!Number.isInteger(Number(req.query.page)) ||
+       Number(req.query.page) &lt; 1)) ||
+    (req.query.limit !== undefined &amp;&amp;
+      (!Number.isInteger(Number(req.query.limit)) ||
+       Number(req.query.limit) &lt; 1)) ||
+    (maxPrice !== undefined &amp;&amp;
+      (maxPrice.trim() === "" ||
+       !Number.isFinite(Number(maxPrice)) ||
+       Number(maxPrice) &lt; 0))
+  ) {
+    return res.status(400).json({
+      message: "Invalid query parameters"
+    });
+  }
+
+  // Step 1: Filter the records.
+  const filteredProducts = products.filter(product =&gt; {
+    const matchesCategory =
+      !category || product.category === category;
+
+    const matchesPrice =
+      maxPrice === undefined ||
+      product.price &lt;= Number(maxPrice);
+
+    return matchesCategory &amp;&amp; matchesPrice;
+  });
+
+  // Step 2: Calculate pagination.
+  const total = filteredProducts.length;
+  const totalPages = Math.ceil(total / limit);
+  const skip = (page - 1) * limit;
+
+  // Step 3: Get records for the requested page.
+  const results = filteredProducts.slice(
+    skip,
+    skip + limit
+  );
+
+  // Step 4: Send the response.
+  res.json({
+    data: results,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages
+    }
+  });
+});
+
+app.listen(3000, () =&gt; {
+  console.log("Server running on port 3000");
+});</code></pre>
+
+      <h3>Step 3: Run the server</h3>
+      <pre><code>node server.js</code></pre>
+    </section>
+
+    <section>
+      <h2>6. Understand the Main Concepts</h2>
+
+      <h3>A. req.query</h3>
+      <p>
+        Express exposes query-string values through
+        <code>req.query</code>.
+      </p>
+
+      <pre><code>/api/products?category=electronics&amp;page=2&amp;limit=10
+
+req.query.category // "electronics"
+req.query.page     // "2"
+req.query.limit    // "10"</code></pre>
+
+      <h3>B. Filtering with filter()</h3>
+      <pre><code>const result = products.filter(product =&gt;
+  product.category === "electronics"
+);</code></pre>
+
+      <p>
+        The array's <code>filter()</code> method keeps records
+        that satisfy the specified condition.
+      </p>
+
+      <h3>C. Calculate the offset</h3>
+      <pre><code>const skip = (page - 1) * limit;</code></pre>
+
+      <ul>
+        <li>Page 1, limit 10: skip 0 records.</li>
+        <li>Page 2, limit 10: skip 10 records.</li>
+        <li>Page 3, limit 10: skip 20 records.</li>
+      </ul>
+
+      <h3>D. Select the current page</h3>
+      <pre><code>const results = filteredProducts.slice(
+  skip,
+  skip + limit
+);</code></pre>
+
+      <h3>E. Calculate total pages</h3>
+      <pre><code>const totalPages = Math.ceil(total / limit);</code></pre>
+
+      <p>
+        If there are 45 matching products and the limit is 10,
+        the result is 5 pages.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Example API Response</h2>
+
+      <p>
+        Request:
+      </p>
+
+      <pre><code>GET /api/products?category=electronics&amp;page=1&amp;limit=2</code></pre>
+
+      <p>
+        A successful response might look like this:
+      </p>
+
+      <pre><code>{
+  "data": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "category": "electronics",
+      "price": 450
+    },
+    {
+      "id": 2,
+      "name": "Phone",
+      "category": "electronics",
+      "price": 300
+    }
+  ],
+  "pagination": {
+    "total": 3,
+    "page": 1,
+    "limit": 2,
+    "totalPages": 2
+  }
+}</code></pre>
+
+      <p>
+        The data array contains the current page. The pagination
+        object tells the frontend how many matching records and
+        pages exist.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Database-Level Pagination</h2>
+
+      <p>
+        In a real application, filtering and pagination should
+        normally be performed by the database rather than by
+        loading the entire collection into server memory.
+      </p>
+
+      <h3>Example with MongoDB and Mongoose</h3>
+
+      <pre><code>const filter = {};
+
+if (req.query.category) {
+  filter.category = req.query.category;
+}
+
+if (req.query.maxPrice !== undefined) {
+  filter.price = {
+    $lte: Number(req.query.maxPrice)
+  };
+}
+
+const [data, total] = await Promise.all([
+  Product.find(filter)
+    .sort({ _id: 1 })
+    .skip((page - 1) * limit)
+    .limit(limit),
+
+  Product.countDocuments(filter)
+]);
+
+res.json({
+  data,
+  pagination: {
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit)
+  }
+});</code></pre>
+
+      <p>
+        Place this snippet inside an async Express route.
+        Define the Product model, connect to MongoDB, and validate
+        the parameters before running the database queries.
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Best Practices</h2>
+
+      <ul>
+        <li>Validate page numbers, limits, and filter values.</li>
+        <li>Set a maximum page size, such as 100 records.</li>
+        <li>Filter records before paginating.</li>
+        <li>Use database indexes for common filters and sorting.</li>
+        <li>Use a stable sort order for predictable pagination.</li>
+        <li>Return total counts and pagination metadata.</li>
+        <li>Consider cursor pagination for very large datasets.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>10. Final Summary</h2>
+
+      <div class="highlight">
+        <p>
+          <strong>Filtering:</strong>
+          Which records match my conditions?
+        </p>
+
+        <p>
+          <strong>Pagination:</strong>
+          Which subset of matching records should I return?
+        </p>
+      </div>
+
+      <p>
+        HTML and CSS create the user interface. Express.js
+        processes API requests, while a database can filter,
+        count, sort, and paginate records efficiently.
+      </p>
+
+      <p>
+        Using filtering and pagination together makes product
+        catalogs, dashboards, search pages, and other
+        data-heavy applications easier to use and maintain.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    Express.js Filtering &amp; Pagination — Beginner's Guide
+  </footer>
+
+</body>
+
+</html>
